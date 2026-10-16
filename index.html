@@ -1,0 +1,3839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kuber Alpha Research — Employee Onboarding & Joining System</title>
+<style>
+:root {
+  --bg: #EEF2F6;
+  --sf: #FFFFFF;
+  --ink: #14213D;
+  --mut: #5C6B7F;
+  --ln: #D5DDE6;
+  --ac: #2563EB;
+  --ac-hover: #1D4ED8;
+  --g: #1E8E5A;
+  --gs: #E3F4EB;
+  --r: #C0392B;
+  --rs: #FBE7E7;
+  --y: #B8860B;
+  --ys: #FDF3DA;
+  --gold: #B8860B;
+  --gold-dark: #946C06;
+  --highlight: #FEF08A;
+  --highlight-border: #F59E0B;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 14px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+header.app-header {
+  background: #0D1B2A;
+  color: #fff;
+  padding: 14px 20px;
+  border-bottom: 3px solid var(--gold);
+}
+.header-wrap {
+  max-width: 1140px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.brand-title {
+  display: flex;
+  flex-direction: column;
+}
+.brand-title h1 {
+  margin: 0;
+  font-size: 19px;
+  letter-spacing: -0.01em;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.brand-title .sebi-tag {
+  color: #FBBF24;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+.header-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+main {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 16px 14px 60px;
+}
+
+/* Nav tabs */
+.tabs-bar {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  background: var(--sf);
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--ln);
+  margin-bottom: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+.tabs-bar button {
+  background: transparent;
+  border: 0;
+  border-radius: 6px;
+  color: var(--mut);
+  font: 600 13px system-ui;
+  padding: 8px 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+}
+.tabs-bar button:hover {
+  background: var(--bg);
+  color: var(--ink);
+}
+.tabs-bar button[aria-selected="true"] {
+  background: var(--ac);
+  color: #fff;
+}
+
+/* Info banner */
+.banner {
+  background: #EFF6FF;
+  border-left: 4px solid var(--ac);
+  padding: 10px 14px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  font-size: 13px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.steps-bar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.step-chip {
+  background: var(--sf);
+  border: 1px solid var(--ln);
+  border-radius: 20px;
+  padding: 5px 12px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--mut);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.step-chip.active {
+  border-color: var(--ac);
+  color: var(--ac);
+  background: #EFF6FF;
+}
+.step-chip.done {
+  background: var(--gs);
+  color: var(--g);
+  border-color: #86EFAC;
+}
+
+/* Card */
+.card {
+  background: var(--sf);
+  border: 1px solid var(--ln);
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 14px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+}
+.card h3 {
+  margin: 0 0 12px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--ln);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.card h3 small {
+  font-size: 11.5px;
+  font-weight: 400;
+  color: var(--mut);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
+}
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 8px;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--mut);
+  gap: 4px;
+}
+label.req::after {
+  content: " *";
+  color: var(--r);
+  font-weight: 700;
+}
+
+input, select, textarea {
+  font: inherit;
+  font-size: 13px;
+  color: var(--ink);
+  background: var(--bg);
+  border: 1px solid var(--ln);
+  border-radius: 6px;
+  padding: 8px 10px;
+  width: 100%;
+  transition: border 0.15s ease, background 0.15s ease;
+}
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--ac);
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
+}
+textarea {
+  min-height: 54px;
+  resize: vertical;
+}
+
+button.btn {
+  font: 600 13px system-ui;
+  background: var(--ac);
+  color: #fff;
+  border: 0;
+  border-radius: 6px;
+  padding: 8px 16px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+}
+button.btn:hover { background: var(--ac-hover); }
+button.btn.g { background: transparent; color: var(--ink); border: 1px solid var(--ln); }
+button.btn.g:hover { background: var(--bg); }
+button.btn.gold { background: var(--gold); color: #fff; }
+button.btn.gold:hover { background: var(--gold-dark); }
+button.btn.green { background: var(--g); color: #fff; }
+button.btn.green:hover { background: #166534; }
+button.btn.r { background: var(--r); color: #fff; }
+button.btn.sm { padding: 5px 12px; font-size: 12px; }
+button:disabled { opacity: .45; cursor: default; }
+
+.btn-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+
+.tag {
+  display: inline-block;
+  border-radius: 4px;
+  padding: 2px 7px;
+  font-size: 11px;
+  font-weight: 600;
+}
+.t-ok { background: var(--gs); color: var(--g); }
+.t-warn { background: var(--ys); color: var(--y); }
+.t-bad { background: var(--rs); color: var(--r); }
+
+.msg { font-size: 12.5px; color: var(--mut); margin-top: 6px; }
+.msg.err { color: var(--r); font-weight: 600; }
+.msg.ok { color: var(--g); font-weight: 600; }
+
+.docgrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+}
+.docitem {
+  border: 1px solid var(--ln);
+  border-radius: 8px;
+  padding: 10px;
+  background: #FAFAFA;
+}
+.docitem.mandatory {
+  border-left: 3px solid var(--ac);
+}
+.docitem .file-preview {
+  margin-top: 6px;
+  font-size: 11px;
+  color: var(--g);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Document View / Print Styles */
+.doc-selector-bar {
+  background: var(--sf);
+  border: 1px solid var(--ln);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.doc-paper {
+  background: #fff;
+  border: 1px solid #CBD5E1;
+  border-radius: 4px;
+  padding: 38px 46px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  font-family: "Segoe UI", Arial, sans-serif;
+  color: #111827;
+  line-height: 1.55;
+}
+
+/* Official Print Letterhead inside Document */
+.doc-letterhead {
+  text-align: center;
+  border-bottom: 2px solid #0D1B2A;
+  padding-bottom: 12px;
+  margin-bottom: 18px;
+}
+.doc-letterhead .comp-name {
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: #0D1B2A;
+  text-transform: uppercase;
+}
+.doc-letterhead .comp-sub {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gold);
+  margin-top: 2px;
+}
+.doc-letterhead .comp-reg {
+  font-size: 11px;
+  font-weight: 600;
+  color: #374151;
+  margin-top: 1px;
+}
+.doc-letterhead .comp-addr {
+  font-size: 10.5px;
+  color: #4B5563;
+  margin-top: 3px;
+  line-height: 1.4;
+}
+
+.doc-title {
+  text-align: center;
+  font-size: 15px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 16px 0 12px;
+  color: #0D1B2A;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.doc-sec-title {
+  font-size: 12.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #1F2937;
+  margin: 14px 0 5px;
+  border-bottom: 1px solid #E5E7EB;
+  padding-bottom: 3px;
+}
+
+/* Tables inside official documents */
+.doc-tbl {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 8px 0 14px;
+  font-size: 11.5px;
+}
+.doc-tbl th, .doc-tbl td {
+  border: 1px solid #4B5563;
+  padding: 5px 8px;
+  text-align: left;
+  vertical-align: top;
+}
+.doc-tbl th {
+  background: #F3F4F6;
+  font-weight: 700;
+  color: #111827;
+}
+
+.doc-p {
+  font-size: 11.5px;
+  margin: 7px 0;
+  text-align: justify;
+}
+.doc-list {
+  font-size: 11.5px;
+  margin: 5px 0 8px;
+  padding-left: 20px;
+}
+.doc-list li {
+  margin-bottom: 3px;
+}
+
+/* Auto-fill Highlight */
+mark.autofill {
+  background: var(--highlight);
+  color: #111;
+  padding: 1px 4px;
+  border-radius: 2px;
+  border-bottom: 1px dashed var(--highlight-border);
+  font-weight: 700;
+}
+body.no-highlights mark.autofill {
+  background: transparent;
+  padding: 0;
+  border-bottom: none;
+  font-weight: 700;
+}
+
+/* Signature Block - Employee Only */
+.doc-sign-block {
+  margin-top: 26px;
+  padding-top: 14px;
+  border-top: 1px dashed #9CA3AF;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  font-size: 12px;
+}
+.doc-sign-block.single-sign {
+  justify-content: flex-end;
+}
+.sign-box {
+  min-width: 250px;
+  text-align: center;
+}
+.sign-image-preview {
+  height: 52px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  margin-bottom: 3px;
+}
+.sign-image-preview img {
+  max-height: 48px;
+  max-width: 170px;
+  object-fit: contain;
+}
+.sign-line {
+  border-top: 1.5px solid #111;
+  padding-top: 4px;
+  font-weight: 700;
+}
+.sign-meta {
+  font-size: 11px;
+  color: #4B5563;
+  margin-top: 2px;
+}
+
+/* Canvas Pad */
+#signCanvas {
+  background: #fff;
+  border: 1.5px dashed #94A3B8;
+  border-radius: 6px;
+  cursor: crosshair;
+  touch-action: none;
+  display: block;
+}
+
+/* HR Table */
+.wrap {
+  overflow-x: auto;
+  border: 1px solid var(--ln);
+  border-radius: 8px;
+  background: var(--sf);
+}
+table.app-table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 12.5px;
+}
+table.app-table th, table.app-table td {
+  text-align: left;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--ln);
+  white-space: nowrap;
+}
+table.app-table th {
+  color: var(--mut);
+  background: #F8FAFC;
+  font-weight: 700;
+}
+
+/* POLICE VERIFICATION HINDI OFFICIAL SHEET */
+.police-hindi-paper {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #000 !important;
+  line-height: 1.45;
+  background: #fff !important;
+  padding: 24px 34px !important;
+  border: 1.5px solid #000;
+  border-radius: 2px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  margin-bottom: 24px;
+}
+.police-header {
+  text-align: center;
+  margin-bottom: 8px;
+}
+.police-dept-title {
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+  color: #000;
+  margin-bottom: 4px;
+}
+.police-logo-wrap {
+  margin: 3px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.police-form-title {
+  font-size: 15.5px;
+  font-weight: 800;
+  margin: 4px 0 8px;
+  color: #000;
+  letter-spacing: 0.2px;
+}
+.police-box-makan {
+  border: 1.5px solid #000;
+  padding: 6px 10px;
+  margin-bottom: 8px;
+}
+.police-row {
+  display: flex;
+  align-items: flex-end;
+  font-size: 12px;
+  margin-bottom: 4px;
+  line-height: 1.4;
+}
+.police-row .p-lbl {
+  font-weight: 700;
+  color: #000;
+  white-space: nowrap;
+}
+.police-row .p-col {
+  width: 14px;
+  text-align: center;
+  font-weight: 700;
+}
+.police-row .p-val {
+  flex: 1;
+  border-bottom: 1px dotted #000;
+  min-height: 18px;
+  padding: 0 4px;
+  font-size: 12px;
+  color: #000;
+}
+.police-photo-box {
+  width: 110px;
+  height: 125px;
+  border: 1.5px solid #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.3;
+  padding: 2px;
+  background: #FFF;
+}
+.police-ghoshna-title {
+  text-align: center;
+  font-size: 14px;
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  margin: 14px 0 6px;
+}
+.police-ghoshna-text {
+  font-size: 12px;
+  line-height: 1.6;
+  text-align: justify;
+}
+
+/* Modals */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+.modal-box {
+  background: #fff;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 580px;
+  padding: 22px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+}
+
+/* PRINT MEDIA QUERY FOR HIGH RESOLUTION PRINT */
+@media print {
+  @page {
+    size: A4;
+    margin: 12mm 15mm 15mm 15mm;
+  }
+  body {
+    background: #fff !important;
+    color: #000 !important;
+    font-size: 11pt !important;
+    line-height: 1.5 !important;
+  }
+  header.app-header,
+  .tabs-bar,
+  .banner,
+  .steps-bar,
+  .doc-selector-bar,
+  .no-print,
+  #p-join,
+  #p-sign,
+  #p-video,
+  #p-hr,
+  .modal-overlay {
+    display: none !important;
+  }
+  #p-docs {
+    display: block !important;
+  }
+  .doc-paper {
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    page-break-after: always;
+  }
+  .doc-paper:last-child {
+    page-break-after: avoid;
+  }
+  mark.autofill {
+    background: transparent !important;
+    border-bottom: none !important;
+    color: #000 !important;
+    font-weight: 700 !important;
+  }
+  .doc-tbl th {
+    background: #E5E7EB !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+</style>
+</head>
+<body>
+
+<header class="app-header no-print">
+  <div class="header-wrap">
+    <div class="brand-title">
+      <span class="sebi-tag">SEBI Registered Research Analyst • INH000013642</span>
+      <h1>Kuber Alpha Research — Joining &amp; Documentation Portal</h1>
+    </div>
+    <div class="header-actions">
+      <button class="btn gold sm" id="btnQuickDemo">⚡ Load Demo Details</button>
+      <button class="btn g sm" id="btnResetAll" style="color:#fff;border-color:#4B5563">↺ Clear / New Joiner</button>
+      <button class="btn green sm" id="btnPrintAllNav">🖨️ Print Complete Kit</button>
+      <button class="btn sm" id="btnAdminLogin" style="background:#4F46E5;color:#fff; font-weight:700;" onclick="handleAdminLoginClick()">👥 Open HR Dashboard (PIN: 1234)</button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <div class="banner no-print" id="appBanner">
+    <div>
+      <strong>✨ 1-Time Entry, Complete Auto-Fill System:</strong>
+      Candidate fills basic details once. All joining agreements, 3 specialized offer letters (HR, Sales, Percentage-Base) &amp; Hindi police verification form are automatically populated! Authority &amp; office sign boxes are removed from agreements.
+    </div>
+  </div>
+
+  <div class="tabs-bar no-print" role="tablist">
+    <button data-t="join" aria-selected="true" id="tabNavJoin">📝 1. New Joiner Form</button>
+    <button data-t="docs" aria-selected="false" id="tabNavDocs">📄 2. All Generated Documents (Print / Download)</button>
+    <button data-t="sign" aria-selected="false" id="tabNavSign">✍️ 3. Candidate Digital Signature</button>
+    <button data-t="video" aria-selected="false" id="tabNavVideo">🎥 4. Video Statement</button>
+    <button data-t="hr" aria-selected="false" id="tabNavHR" style="background:#FEF2F2; color:#DC2626; border:1.5px solid #FCA5A5; font-weight:700;">👥 5. HR Dashboard &amp; Records 🔒</button>
+  </div>
+
+  <div class="steps-bar no-print" id="statusBar"></div>
+
+  <!-- ============================================================== -->
+  <!-- TAB 1: NEW JOINER REGISTRATION FORM                           -->
+  <!-- ============================================================== -->
+  <section id="p-join">
+    
+    <div class="card">
+      <h3>1. Personal Details <small>Candidate's basic identity &amp; address</small></h3>
+      <div class="grid">
+        <label class="req">Full Name (As per Aadhaar)
+          <input id="f_name" placeholder="e.g. Rahul Sharma" autocomplete="name">
+        </label>
+        <label>Father's / Mother's Name
+          <input id="f_parent" placeholder="e.g. Ramesh Sharma">
+        </label>
+        <label class="req">Date of Birth
+          <input id="f_dob" type="date">
+        </label>
+        <label>Gender
+          <select id="f_gender">
+            <option value="">Select</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Other</option>
+          </select>
+        </label>
+        <label>Marital Status
+          <select id="f_marital">
+            <option value="">Select</option>
+            <option>Single</option>
+            <option>Married</option>
+          </select>
+        </label>
+        <label class="req">Mobile Number
+          <input id="f_mobile" type="tel" placeholder="10-digit mobile" maxlength="10">
+        </label>
+        <label>Alternate Contact Number
+          <input id="f_altmobile" type="tel" placeholder="Backup contact number">
+        </label>
+        <label class="req">Personal Email ID
+          <input id="f_email" type="email" placeholder="e.g. rahul@example.com">
+        </label>
+      </div>
+      <div class="grid" style="margin-top:10px">
+        <label class="req">Current Address (Local Indore / Residential)
+          <textarea id="f_curaddr" placeholder="Current flat/house no., street, locality, Indore, MP - PIN"></textarea>
+        </label>
+        <label class="req">Permanent Address (Hometown Address)
+          <textarea id="f_permaddr" placeholder="Permanent hometown address with PIN code"></textarea>
+        </label>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>2. Identity &amp; Statutory Numbers <small>Aadhaar is mandatory (12 digits)</small></h3>
+      <div class="grid">
+        <label class="req">Aadhaar Card Number (12 Digits)
+          <input id="f_aadhaar" placeholder="1234 5678 9012" maxlength="14" required>
+        </label>
+        <label>PAN Card Number (10 Digits)
+          <input id="f_pan" style="text-transform:uppercase" placeholder="e.g. ABCDE1234F" maxlength="10">
+        </label>
+        <label>Driving License / Passport No.
+          <input id="f_dlpp" placeholder="ID number if available">
+        </label>
+        <label>UAN Number (PF if applicable)
+          <input id="f_uan" placeholder="12-digit UAN if previously employed">
+        </label>
+      </div>
+      <div class="grid" style="margin-top:10px">
+        <label>Ever convicted or facing any criminal case?
+          <select id="f_convicted">
+            <option value="No">No — No criminal or civil case pending</option>
+            <option value="Yes">Yes — Have case or proceeding</option>
+          </select>
+        </label>
+        <label>If Yes, details (Case/FIR No., Authority, Status)
+          <input id="f_convicted_details" placeholder="Leave blank if None">
+        </label>
+      </div>
+    </div>
+
+    <!-- 3. POSITION & OFFER LETTER TERMS -->
+    <div class="card">
+      <h3>3. Position &amp; Offer Letter Terms <small>Select Offer Letter Profile (HR, Sales, or Percentage-Base)</small></h3>
+      
+      <div style="background:#F0F9FF; border:1.5px solid #BAE6FD; border-radius:8px; padding:12px; margin-bottom:12px;">
+        <label style="color:#0369A1; font-weight:700; font-size:13px;">
+          Choose Offer Letter Profile Type:
+          <select id="ol_type" style="margin-top:4px; font-weight:700; color:#0C4A6E; border-color:#38BDF8;" onchange="handleOfferTypeChange()">
+            <option value="hr">1. Human Resource Executive (HR) — ₹20,000 Fixed + 5 Hirings Target</option>
+            <option value="sales">2. Sales / Senior Business Associate / Manager — ₹33k+₹1k+₹1k + Target ₹5.25L</option>
+            <option value="percent">3. Percentage-Base Working (Individual Business Associate - BA) — 30% Comm. on ₹2L Target</option>
+          </select>
+        </label>
+      </div>
+
+      <!-- General Position fields -->
+      <div class="grid">
+        <label class="req">Position / Designation
+          <input id="f_position" placeholder="Designation">
+        </label>
+        <label>Department
+          <input id="f_dept" placeholder="e.g. Human Resources / Sales / Research">
+        </label>
+        <label>Reporting Manager
+          <input id="f_manager" value="Aakash Rathore" placeholder="Reporting Manager">
+        </label>
+        <label>Work Location
+          <input id="f_location" value="Indore (M.P.)" placeholder="Indore (M.P.)">
+        </label>
+        <label class="req">Date of Joining
+          <input id="f_doj" type="date">
+        </label>
+        <label>Probation Period (months)
+          <input id="f_probation" type="number" min="0" value="1">
+        </label>
+        <label>Employee ID
+          <input id="f_empid" placeholder="e.g. KAR-2026-042">
+        </label>
+      </div>
+
+      <!-- PROFILE 1: HR SPECIFIC TERMS -->
+      <div id="box_ol_hr" style="margin-top:12px; padding:12px; background:#F8FAFC; border:1px solid #CBD5E1; border-radius:6px;">
+        <div style="font-size:12.5px; font-weight:700; color:#1E293B; margin-bottom:8px;">📌 HR Executive Terms (Changeable values):</div>
+        <div class="grid">
+          <label>Fixed Monthly Salary (₹)
+            <input id="ol_hr_salary" type="number" value="20000" oninput="syncSalaryFromProfile()">
+          </label>
+          <label>Monthly Minimum Hirings Target
+            <input id="ol_hr_target" type="number" value="5" placeholder="Minimum 5 successful hirings">
+          </label>
+          <label>Probation Period (Months)
+            <input id="ol_hr_prob" type="number" value="1">
+          </label>
+        </div>
+      </div>
+
+      <!-- PROFILE 2: SALES SPECIFIC TERMS -->
+      <div id="box_ol_sales" style="margin-top:12px; padding:12px; background:#F8FAFC; border:1px solid #CBD5E1; border-radius:6px; display:none;">
+        <div style="font-size:12.5px; font-weight:700; color:#1E293B; margin-bottom:8px;">📌 Sales / SBA / Manager Terms (Changeable values):</div>
+        <div class="grid">
+          <label>Basic Salary (₹)
+            <input id="ol_sales_basic" type="number" value="33000" oninput="calcSalesSalary()">
+          </label>
+          <label>Attendance Allowance (₹)
+            <input id="ol_sales_att" type="number" value="1000" oninput="calcSalesSalary()">
+          </label>
+          <label>5 Paid Client Allowance (₹)
+            <input id="ol_sales_client" type="number" value="1000" oninput="calcSalesSalary()">
+          </label>
+          <label>Total Monthly Salary (₹)
+            <input id="ol_sales_total" type="number" value="35000" readonly style="font-weight:700; background:#E2E8F0;">
+          </label>
+        </div>
+        <div class="grid" style="margin-top:8px;">
+          <label>Monthly Target (₹)
+            <input id="ol_sales_target" value="5,25,000 (+18% GST)">
+          </label>
+          <label>Min Paid Registrations Required
+            <input id="ol_sales_min_reg" type="number" value="3">
+          </label>
+          <label>Deduction below 50% target (%)
+            <input id="ol_sales_deduct_pct" type="number" value="30" min="0" max="100" placeholder="e.g. 30" oninput="updateDeductNote()">
+          </label>
+          <label>Performance Bonus on Target (₹)
+            <input id="ol_sales_bonus" type="number" value="6000">
+          </label>
+          <label>Overachievement Bonus (%)
+            <input id="ol_sales_overachieve" type="number" value="10">
+          </label>
+        </div>
+        <div style="font-size:11.5px; color:#475569; margin-top:6px; background:#EFF6FF; padding:6px 10px; border-radius:4px;">
+          <strong>Target Deductions:</strong> ≥50% sales: Full salary | Below 50% sales: <span id="disp_deduct_note" style="font-weight:700; color:#DC2626;">30</span>% deduction (changeable) | 0 sales: No salary payable.
+        </div>
+      </div>
+
+      <!-- PROFILE 3: PERCENTAGE BASE SPECIFIC TERMS -->
+      <div id="box_ol_percent" style="margin-top:12px; padding:12px; background:#F8FAFC; border:1px solid #CBD5E1; border-radius:6px; display:none;">
+        <div style="font-size:12.5px; font-weight:700; color:#1E293B; margin-bottom:8px;">📌 Percentage-Base Working (BA) Terms (Changeable values):</div>
+        <div class="grid">
+          <label>Sales Commission (%)
+            <input id="ol_pct_commission" type="number" value="30">
+          </label>
+          <label>Min Monthly Sales Target for Commission (₹)
+            <input id="ol_pct_target" type="number" value="200000">
+          </label>
+        </div>
+        <div style="font-size:11.5px; color:#475569; margin-top:6px; background:#EFF6FF; padding:6px 10px; border-radius:4px;">
+          <strong>Condition:</strong> 30% of sales revenue generated if minimum ₹2,00,000 target achieved. If zero sales, no commission payable.
+        </div>
+      </div>
+
+      <input id="f_salary" type="hidden" value="20000">
+    </div>
+
+    <div class="card">
+      <h3>4. Educational Qualifications</h3>
+      <div class="grid-3">
+        <label>10th — Board/School <input id="e10_inst" placeholder="e.g. CBSE / MP Board"></label>
+        <label>10th Passing Year <input id="e10_year" placeholder="e.g. 2017"></label>
+        <label>10th % / Grade <input id="e10_pct" placeholder="e.g. 82%"></label>
+      </div>
+      <div class="grid-3" style="margin-top:8px">
+        <label>12th — Board/School <input id="e12_inst" placeholder="e.g. CBSE / Commerce"></label>
+        <label>12th Passing Year <input id="e12_year" placeholder="e.g. 2019"></label>
+        <label>12th % / Grade <input id="e12_pct" placeholder="e.g. 78%"></label>
+      </div>
+      <div class="grid-3" style="margin-top:8px">
+        <label>Graduation — Degree &amp; College <input id="egrad_inst" placeholder="e.g. B.Com / DAVV Indore"></label>
+        <label>Graduation Year <input id="egrad_year" placeholder="e.g. 2022"></label>
+        <label>Graduation % / Grade <input id="egrad_pct" placeholder="e.g. 74%"></label>
+      </div>
+      <div class="grid-3" style="margin-top:8px">
+        <label>Other / Post Graduation <input id="eoth_inst" placeholder="e.g. MBA / NISM Series"></label>
+        <label>Year <input id="eoth_year" placeholder="e.g. 2024"></label>
+        <label>% / Grade <input id="eoth_pct" placeholder="e.g. Grade A"></label>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>5. Work Experience (Most Recent / Previous)</h3>
+      <div class="grid">
+        <label>Previous Company Name <input id="w_company" placeholder="e.g. Apex FinTech Pvt Ltd"></label>
+        <label>Designation <input id="w_desig" placeholder="e.g. Junior Research Associate"></label>
+        <label>Duration of Employment <input id="w_duration" placeholder="e.g. 1.5 Years"></label>
+        <label>Last Drawn Monthly Salary (₹) <input id="w_salary" type="number" placeholder="e.g. 20000"></label>
+        <label>Reason for Leaving <input id="w_reason" placeholder="e.g. Career growth / Relocation"></label>
+      </div>
+      <div class="grid" style="margin-top:10px">
+        <label>Current/Last Salary (₹) <input id="w_cursal" type="number" placeholder="20000"></label>
+        <label>Expected Salary (₹) <input id="w_expsal" type="number" placeholder="25000"></label>
+        <label>Notice Period (Days) <input id="w_notice" placeholder="Immediate / 15 Days"></label>
+        <label>Joining Availability <input id="w_avail" placeholder="Immediate"></label>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>6. Skills &amp; Competencies</h3>
+      <div style="display:flex; flex-wrap:wrap; gap:16px; margin: 8px 0;">
+        <label style="flex-direction:row;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" id="sk_office"> Excel / MS Word / PowerPoint</label>
+        <label style="flex-direction:row;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" id="sk_market"> Stock Market &amp; Technical Analysis</label>
+        <label style="flex-direction:row;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" id="sk_sales"> Sales &amp; Client Acquisition</label>
+        <label style="flex-direction:row;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" id="sk_crm"> Telecalling / CRM Handling</label>
+        <label style="flex-direction:row;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" id="sk_trading"> Trading Platform Knowledge</label>
+        <label style="flex-direction:row;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" id="sk_comm"> Business Communication</label>
+      </div>
+      <label style="margin-top:8px">Other Skills / NISM Certifications
+        <input id="sk_other" placeholder="e.g. NISM Series XV certified, Python, Technical analysis">
+      </label>
+    </div>
+
+    <div class="card">
+      <h3>7. Bank Account Details <small>Digits strictly validated</small></h3>
+      <div class="grid">
+        <label class="req">Bank Name <input id="b_bank" placeholder="e.g. HDFC Bank / SBI / ICICI"></label>
+        <label class="req">Account Holder Name <input id="b_holder" placeholder="Name exactly as in passbook"></label>
+        <label class="req">Bank Account Number (9–18 Digits) 
+          <input id="b_acc" inputmode="numeric" placeholder="9 to 18 digits only" maxlength="18">
+        </label>
+        <label class="req">IFSC Code (11 Characters Fixed) 
+          <input id="b_ifsc" style="text-transform:uppercase" placeholder="e.g. HDFC0001234" maxlength="11">
+        </label>
+        <label>UPI ID <input id="b_upi" placeholder="username@upi"></label>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>8. Emergency Contact &amp; Professional Reference</h3>
+      <div class="grid">
+        <label class="req">Emergency Contact Person Name <input id="em_name" placeholder="e.g. Ekta Sharma"></label>
+        <label class="req">Relationship with Candidate <input id="em_rel" placeholder="e.g. Mother / Father / Brother"></label>
+        <label class="req">Emergency Contact Mobile <input id="em_mobile" placeholder="10-digit mobile" maxlength="10"></label>
+        <label class="req">Emergency Contact Address <input id="em_addr" placeholder="Permanent or residential address"></label>
+      </div>
+      <div class="grid" style="margin-top:10px">
+        <label>Professional Reference Name <input id="rf_name" placeholder="Previous manager or senior colleague"></label>
+        <label>Reference Company / Org <input id="rf_company" placeholder="Company Name"></label>
+        <label>Reference Designation <input id="rf_desig" placeholder="e.g. Team Lead / HR"></label>
+        <label>Reference Contact Number <input id="rf_mobile" placeholder="Contact number"></label>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>9. Document Checklist &amp; Uploads</h3>
+      <p class="msg">Upload files. Mandatory documents are marked with (*). Uploaded files are saved in local storage.</p>
+      <div class="docgrid">
+        <div class="docitem mandatory">
+          <label class="req">Aadhaar Card Copy <input type="file" id="doc_aadhaar" accept="image/*,.pdf"></label>
+          <div id="prev_aadhaar" class="file-preview"></div>
+        </div>
+        <div class="docitem mandatory">
+          <label class="req">Passport Size Photo <input type="file" id="doc_photo" accept="image/*"></label>
+          <div id="prev_photo" class="file-preview"></div>
+        </div>
+        <div class="docitem mandatory">
+          <label class="req">Bank Proof / Cancelled Cheque <input type="file" id="doc_bank" accept="image/*,.pdf"></label>
+          <div id="prev_bank" class="file-preview"></div>
+        </div>
+        <div class="docitem mandatory">
+          <label class="req">Educational Certificate <input type="file" id="doc_edu" accept="image/*,.pdf"></label>
+          <div id="prev_edu" class="file-preview"></div>
+        </div>
+        <div class="docitem">
+          <label>PAN Card Copy <input type="file" id="doc_pan" accept="image/*,.pdf"></label>
+          <div id="prev_pan" class="file-preview"></div>
+        </div>
+        <div class="docitem">
+          <label>Resume / CV <input type="file" id="doc_resume" accept="image/*,.pdf"></label>
+          <div id="prev_resume" class="file-preview"></div>
+        </div>
+        <div class="docitem">
+          <label>Experience / Relieving Letter <input type="file" id="doc_explet" accept="image/*,.pdf"></label>
+          <div id="prev_explet" class="file-preview"></div>
+        </div>
+        <div class="docitem">
+          <label>Salary Slip (Previous) <input type="file" id="doc_salaryslip" accept="image/*,.pdf"></label>
+          <div id="prev_salaryslip" class="file-preview"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="background:#F8FAFC; border:1px solid #CBD5E1">
+      <div class="btn-row">
+        <button class="btn green" id="btnSaveJoiner">💾 Save Details &amp; Auto-Fill All Forms</button>
+        <button class="btn gold" id="btnGoToDocs">📄 View &amp; Print Generated Forms →</button>
+        <button class="btn g" id="btnGoToSign">✍️ Go To Digital Signature</button>
+        <button class="btn sm" id="btnCandidateFinalSubmit1" style="background:#16A34A; color:#fff; font-weight:700; margin-left:auto;" onclick="triggerFinalSubmitModal()">✅ Final Submit Joining to HR</button>
+      </div>
+      <div id="saveMsg" class="msg"></div>
+    </div>
+
+  </section>
+
+  <!-- ============================================================== -->
+  <!-- TAB 2: VIEW, PRINT & DOWNLOAD ALL GENERATED DOCUMENTS         -->
+  <!-- ============================================================== -->
+  <section id="p-docs" hidden>
+    
+    <div class="doc-selector-bar no-print">
+      <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap">
+        <label style="font-weight:700; color:var(--ink); font-size:13px">Select Document:</label>
+        <select id="docSelector" style="width:auto; min-width:340px; font-weight:600">
+          <option value="all">📑 All Documents (Complete Joining Set)</option>
+          <option value="offerHR">1. Offer Letter — Human Resource Executive (HR)</option>
+          <option value="offerSales">2. Offer Letter — Sales / SBA / Manager</option>
+          <option value="offerPercent">3. Offer Letter — Percentage-Base Working (BA)</option>
+          <option value="policeVerif">4. Police Verification Form (Tenant / Employee Verification - Indore Police)</option>
+          <option value="appForm">5. Employment Application Form</option>
+          <option value="joinDecl">6. Employee Joining, Confidentiality &amp; Compliance Declaration</option>
+          <option value="codeConduct">7. Code of Conduct, Workplace Ethics &amp; Standards Policy</option>
+          <option value="nda">8. Non-Disclosure &amp; SEBI Compliance Agreement (NDA)</option>
+          <option value="probation">9. Probation Period Appointment Letter</option>
+          <option value="selfDecl">10. Legal, Criminal &amp; Regulatory Declaration cum Undertaking</option>
+        </select>
+      </div>
+
+      <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap">
+        <label style="flex-direction:row; align-items:center; gap:6px; cursor:pointer; font-size:12px; margin-right:6px;">
+          <input type="checkbox" id="chkHighlight" checked> Highlight Auto-filled Data
+        </label>
+        <button class="btn sm green" id="btnPrintCurrent">🖨️ Print Selected</button>
+        <button class="btn sm" id="btnDownloadCurrent" style="background:#0284C7; color:#fff">📥 Download Document</button>
+        <button class="btn sm gold" id="btnPrintAll">🖨️ Print All Forms</button>
+        <button class="btn sm" id="btnDownloadAll" style="background:#0F766E; color:#fff">📥 Download Complete Kit</button>
+        <button class="btn sm" style="background:#16A34A; color:#fff; font-weight:700;" onclick="triggerFinalSubmitModal()">✅ Final Submit to HR</button>
+      </div>
+    </div>
+
+    <!-- DOCUMENT CONTAINER FOR LIVE PREVIEW, HIGH RES PRINTING & DOWNLOAD -->
+    <div id="docPrintContainer">
+      <!-- Generated papers injected dynamically -->
+    </div>
+
+  </section>
+
+  <!-- ============================================================== -->
+  <!-- TAB 3: CANDIDATE DIGITAL SIGNATURE PAD (CANVAS + IMAGE UPLOAD)-->
+  <!-- ============================================================== -->
+  <section id="p-sign" hidden>
+    
+    <div class="card">
+      <h3>Candidate Digital Signature <small>Both Canvas Sign &amp; Image Upload are supported!</small></h3>
+      <p class="msg">Candidate can draw their signature on screen OR upload an image/photo of their signature from paper. Both options are saved and immediately embedded into all joining forms and agreements. (Or leave blank to sign with physical pen on printouts).</p>
+      
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:16px; margin:16px 0;">
+        
+        <!-- OPTION 1: CANVAS DRAW -->
+        <div style="background:#FAFAFA; border:1px solid var(--ln); border-radius:8px; padding:14px;">
+          <div style="font-size:13px; font-weight:700; color:#1E293B; margin-bottom:6px;">
+            ✍️ Option 1: Draw Signature on Screen (Touch / Mouse)
+          </div>
+          <canvas id="signCanvas" width="400" height="150" style="width:100%; max-width:400px; height:150px; background:#fff;"></canvas>
+          <div style="margin-top:8px; display:flex; gap:6px;">
+            <button class="btn g sm" id="btnClearSign">Clear Canvas</button>
+            <button class="btn sm green" id="btnApplyCanvasSign">Save Canvas Signature</button>
+          </div>
+        </div>
+
+        <!-- OPTION 2: IMAGE UPLOAD -->
+        <div style="background:#FAFAFA; border:1px solid var(--ln); border-radius:8px; padding:14px;">
+          <div style="font-size:13px; font-weight:700; color:#1E293B; margin-bottom:6px;">
+            🖼️ Option 2: Upload Signature Photo / Image
+          </div>
+          <p class="msg" style="margin-top:0">Upload a photo of candidate's signature on white paper:</p>
+          <input type="file" id="uploadSignFile" accept="image/*" style="background:#fff; border:1px solid #CBD5E1; padding:6px; border-radius:6px;">
+          
+          <div style="margin-top:14px;">
+            <div style="font-size:12px; font-weight:700; margin-bottom:4px;">Or Type Cursive Signature:</div>
+            <div style="display:flex; gap:6px;">
+              <input id="typedSignName" placeholder="Type candidate name">
+              <button class="btn g sm" id="btnApplyTypedSign">Generate</button>
+            </div>
+          </div>
+
+          <div style="margin-top:14px; padding:10px; border:1px solid var(--ln); border-radius:6px; background:#FFF">
+            <div style="font-size:11px; font-weight:700; color:var(--mut)">CURRENT ACTIVE SIGNATURE:</div>
+            <div id="activeSignPreview" style="height:55px; display:flex; align-items:center; margin-top:4px">
+              <span style="color:var(--mut); font-size:12px; font-style:italic">No digital signature saved yet (Will print blank line for physical pen signature).</span>
+            </div>
+            <button class="btn r sm" id="btnRemoveSign" style="margin-top:6px; display:none">Remove Signature</button>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="btn-row">
+        <button class="btn gold" id="btnSignAndReview">Proceed to View Filled Documents →</button>
+        <button class="btn sm" style="background:#16A34A; color:#fff; font-weight:700; margin-left:auto;" onclick="triggerFinalSubmitModal()">✅ Final Submit Joining to HR</button>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ============================================================== -->
+  <!-- TAB 4: VIDEO STATEMENT (WITH EXACT SCRIPT DISPLAY)           -->
+  <!-- ============================================================== -->
+  <section id="p-video" hidden>
+    
+    <div class="card">
+      <h3>Video Identity Statement <small>Digital compliance recording</small></h3>
+      
+      <div style="background:#EFF6FF; border-left:4px solid var(--ac); padding:12px 14px; border-radius:6px; margin-bottom:14px;">
+        <div style="font-weight:700; font-size:13px; color:#1E40AF; margin-bottom:4px;">
+          📢 Video Statement Script (Speak clearly in English or Hindi):
+        </div>
+        <div id="videoScriptText" style="font-size:14px; font-weight:700; color:#0F172A; line-height:1.6; padding:12px; background:#fff; border-radius:6px; border:1px solid #CBD5E1;">
+          <div style="color:#1E40AF; margin-bottom:6px;">
+            "My name is <span id="v_name_disp" style="color:var(--ac); text-decoration:underline;">[Rahul Sharma]</span>, and I agree to join Kuber Alpha Research for the position of <span id="v_pos_disp" style="color:var(--ac); text-decoration:underline;">[Senior Research Analyst]</span> at a monthly salary of ₹<span id="v_sal_disp" style="color:var(--ac); text-decoration:underline;">[35,000]</span> and accept all company terms and conditions."
+          </div>
+          <div style="font-size:12px; color:#64748B; font-weight:500;">
+            (Hindi: "मेरा नाम <span id="v_name_disp_hi">[Rahul Sharma]</span> है, और मैं Kuber Alpha Research में <span id="v_pos_disp_hi">[Senior Research Analyst]</span> पद के लिए ₹<span id="v_sal_disp_hi">[35,000]</span> सैलरी और कंपनी के इन सभी नियमों व शर्तों पर सहमत हूँ।")
+          </div>
+        </div>
+      </div>
+
+      <div style="margin: 14px 0">
+        <video id="v_preview" width="400" height="260" autoplay muted playsinline style="background:#000; border-radius:8px; max-width:100%"></video>
+        <div style="margin-top:8px; display:flex; gap:8px; flex-wrap:wrap">
+          <button class="btn" id="v_start">📹 Start Camera &amp; Recording</button>
+          <button class="btn g" id="v_stop" disabled>⏹️ Stop Recording</button>
+          <button class="btn g" id="v_retake" style="display:none">↺ Retake</button>
+          <button class="btn green" id="v_save" disabled>💾 Save Video</button>
+        </div>
+        <div style="margin-top:12px">
+          <label style="font-weight:600; font-size:12px">Or upload pre-recorded video statement file from phone/computer:
+            <input type="file" id="v_upload" accept="video/*" style="width:auto; margin-top:4px">
+          </label>
+        </div>
+        <div id="v_msg" class="msg"></div>
+      </div>
+
+      <div class="btn-row" style="margin-top:16px;">
+        <button class="btn sm" style="background:#16A34A; color:#fff; font-weight:700; font-size:14px; padding:9px 18px;" onclick="triggerFinalSubmitModal()">✅ Final Submit Joining to HR</button>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ============================================================== -->
+  <!-- TAB 5: HR DASHBOARD & RECORDS (ACTIVE + EX-EMPLOYEES + F&F)   -->
+  <!-- ============================================================== -->
+  <section id="p-hr" hidden>
+    
+    <!-- DESK QR CODE BANNER -->
+    <div class="card" style="border:1.5px solid #0284C7; background:#F0F9FF; margin-bottom:14px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+        <div>
+          <h3 style="margin:0; border:none; padding:0; color:#0369A1; font-size:15px;">
+            📱 Candidate Joining QR Code (Reception Desk Standee &amp; Scanner)
+          </h3>
+          <p style="margin:4px 0 0; font-size:12px; color:#475569;">
+            Candidates can scan this QR code with their mobile camera to fill out their joining form. Candidates will not have access to the HR Dashboard.
+          </p>
+        </div>
+        <div style="display:flex; gap:8px;">
+          <button class="btn sm" style="background:#0284C7; color:#fff; font-weight:700;" onclick="openQRModal()">📲 View &amp; Print QR Standee</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:12px; border-bottom:1px solid var(--ln); padding-bottom:8px;">
+        <h3 style="margin:0; border:none; padding:0;">Employee Records &amp; Lifecycle Management</h3>
+        
+        <div style="display:flex; gap:6px;">
+          <button class="btn sm" id="tabBtnActiveEmps" style="background:var(--ac); color:#fff;" onclick="switchHRSubTab('active')">🟢 Active Employees (<span id="cntActive">0</span>)</button>
+          <button class="btn sm g" id="tabBtnExEmps" onclick="switchHRSubTab('ex')">🔴 Ex-Employees &amp; F&amp;F (<span id="cntEx">0</span>)</button>
+        </div>
+      </div>
+
+      <!-- VIEW 1: ACTIVE EMPLOYEES -->
+      <div id="viewActiveEmps">
+        <div class="wrap">
+          <table class="app-table">
+            <thead>
+              <tr>
+                <th>Employee Name</th>
+                <th>Designation</th>
+                <th>Mobile</th>
+                <th>Joining Date</th>
+                <th>Monthly Salary</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="tbodyActiveEmps">
+              <!-- Rendered via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- VIEW 2: EX-EMPLOYEES & FULL AND FINAL SETTLEMENT -->
+      <div id="viewExEmps" style="display:none;">
+        <div class="wrap">
+          <table class="app-table">
+            <thead>
+              <tr>
+                <th>Employee Name</th>
+                <th>Designation</th>
+                <th>Joining Date</th>
+                <th>Separation Date</th>
+                <th>Tenure Worked</th>
+                <th>Notice Period</th>
+                <th>F&amp;F Date</th>
+                <th>Final Settlement Paid</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="tbodyExEmps">
+              <!-- Rendered via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Data Backup &amp; Transfer <small>Excel Sheet Export &amp; JSON Backup</small></h3>
+      <p class="msg">Export all employee records directly into an Excel Sheet (.CSV) or download complete JSON backup to transfer between systems.</p>
+      <div class="btn-row">
+        <button class="btn green" id="btnExportExcel">📊 Export to Excel Sheet (.CSV)</button>
+        <button class="btn g" id="btnExportJSON">⬇️ Export Full JSON Backup</button>
+        <label class="btn g" style="margin:0; cursor:pointer">
+          ⬆️ Import Backup File <input type="file" id="importJSONFile" accept=".json,.csv" style="display:none">
+        </label>
+      </div>
+    </div>
+
+    <!-- HR ADMIN PIN SECURITY SETTINGS -->
+    <div class="card" style="border:1px solid #CBD5E1;">
+      <h3>🔐 HR Admin Security &amp; PIN Settings <small>Set or change confidential login PIN</small></h3>
+      <p class="msg">Configure your private 4-digit PIN required to unlock the HR Dashboard and employee records. Keep this confidential.</p>
+      
+      <div style="display:flex; align-items:flex-end; gap:12px; flex-wrap:wrap; max-width:540px; margin-top:10px;">
+        <label style="flex:1; min-width:160px; font-weight:600;">New 4-Digit PIN
+          <input id="inputNewHRPin" type="password" maxlength="8" placeholder="e.g. 5678" style="font-size:16px; letter-spacing:2px; font-weight:700;">
+        </label>
+        <label style="flex:1; min-width:160px; font-weight:600;">Confirm New PIN
+          <input id="inputConfirmHRPin" type="password" maxlength="8" placeholder="Repeat PIN" style="font-size:16px; letter-spacing:2px; font-weight:700;">
+        </label>
+        <button class="btn green sm" style="height:38px; font-weight:700;" onclick="updateHRPin()">🔒 Save New PIN</button>
+      </div>
+      <div id="pinChangeMsg" class="msg" style="margin-top:8px;"></div>
+    </div>
+
+  </section>
+
+  <!-- MODAL 1: FULL & FINAL SETTLEMENT (EXIT PROCESS) -->
+  <div id="modalFF" class="modal-overlay" style="display:none;">
+    <div class="modal-box">
+      <h3 style="margin-top:0; border-bottom:1px solid #E2E8F0; padding-bottom:8px; color:#DC2626;">
+        Process Resignation / Full &amp; Final Settlement
+      </h3>
+      <div style="font-size:12px; margin-bottom:12px; color:#475569;">
+        Employee: <strong id="ff_emp_name">—</strong> (ID: <span id="ff_emp_id">—</span>) | DOJ: <span id="ff_emp_doj">—</span>
+      </div>
+
+      <div class="grid">
+        <label class="req">Separation / Last Working Date
+          <input id="ff_exit_date" type="date">
+        </label>
+        <label>Reason for Leaving
+          <select id="ff_reason">
+            <option>Resignation</option>
+            <option>Completion of Probation</option>
+            <option>Mutual Separation</option>
+            <option>Termination / Discontinued</option>
+            <option>Personal / Health Reasons</option>
+            <option>Other</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="grid" style="margin-top:10px;">
+        <label class="req">Notice Period Served?
+          <select id="ff_notice_served">
+            <option value="Yes">Yes — Served 30 Days Notice</option>
+            <option value="No">No — Immediate Resignation (Unserved)</option>
+            <option value="Partial">Partial Shortfall (Adjusted in F&amp;F)</option>
+            <option value="Waived">Waived by Management</option>
+          </select>
+        </label>
+        <label class="req">F&amp;F Settlement Date (F&amp;F kab hua)
+          <input id="ff_settle_date" type="date">
+        </label>
+      </div>
+
+      <div class="grid" style="margin-top:10px;">
+        <label class="req">Final Settlement Amount Paid (₹ kitni salary lekar gaya)
+          <input id="ff_amount_paid" type="number" placeholder="e.g. 28500">
+        </label>
+        <label>Asset &amp; Access Clearance
+          <select id="ff_clearance">
+            <option value="Yes">Yes — All Assets &amp; CRM Access Returned</option>
+            <option value="Pending">Pending Recovery</option>
+          </select>
+        </label>
+      </div>
+
+      <label style="margin-top:10px;">Full &amp; Final Settlement Remarks
+        <textarea id="ff_remarks" placeholder="Details of salary calculation, deductions, or handovers..."></textarea>
+      </label>
+
+      <div class="btn-row" style="margin-top:16px; justify-content:flex-end;">
+        <button class="btn g" onclick="closeFFModal()">Cancel</button>
+        <button class="btn r" id="btnSubmitFF">Confirm Exit &amp; Move to Ex-Employees</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 2: HR ADMIN PIN AUTHENTICATION -->
+  <div id="modalPin" class="modal-overlay" style="display:none;">
+    <div class="modal-box" style="max-width:400px; text-align:center;">
+      <div style="font-size:36px; margin-bottom:8px;">🔐</div>
+      <h3 style="margin:0 0 6px; border:none; padding:0; color:#0D1B2A; font-size:18px;">HR Admin Dashboard Login</h3>
+      <p style="font-size:12.5px; color:#475569; margin:0 0 16px;">
+        Default PIN is <strong>1234</strong>. (You can also change your PIN inside the dashboard settings).
+      </p>
+      
+      <input id="inputHRPin" type="password" value="1234" maxlength="8" placeholder="1234" style="font-size:22px; text-align:center; letter-spacing:6px; width:200px; margin:0 auto; display:block; font-weight:700;">
+      <div id="pinErrorMsg" class="msg err" style="min-height:18px;"></div>
+
+      <div class="btn-row" style="justify-content:center; margin-top:14px; gap:8px;">
+        <button class="btn green" style="background:#16A34A; color:#fff; font-weight:700; font-size:14px;" onclick="verifyHRPin()">🔓 Unlock HR Dashboard</button>
+        <button class="btn g" onclick="closePinModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 3: CANDIDATE FINAL SUBMISSION CONFIRMATION -->
+  <div id="modalCandidateSuccess" class="modal-overlay" style="display:none;">
+    <div class="modal-box" style="max-width:440px; text-align:center;">
+      <div style="font-size:46px; margin-bottom:10px;">🎉</div>
+      <h3 style="margin:0 0 8px; border:none; padding:0; color:#16A34A; font-size:18px;">
+        Joining Application Submitted Successfully!
+      </h3>
+      <p style="font-size:13px; color:#334155; line-height:1.6; margin:0 0 16px;">
+        Thank you <strong><span id="subSuccessName">Candidate</span></strong>! Your onboarding form, joining agreements, and digital signature have been securely submitted to Kuber Alpha Research HR records.
+      </p>
+
+      <div class="btn-row" style="justify-content:center;">
+        <button class="btn green" onclick="printCandidateCopy()">🖨️ Print My Documents</button>
+        <button class="btn g" onclick="finishCandidateSubmit()">Done / New Joiner Form</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 4: DESK JOINING QR CODE MODAL -->
+  <div id="modalQR" class="modal-overlay" style="display:none;">
+    <div class="modal-box" style="max-width:420px; text-align:center;">
+      <h3 style="margin:0 0 4px; border:none; padding:0; color:#0369A1;">
+        Kuber Alpha Research
+      </h3>
+      <div style="font-size:12px; font-weight:700; color:#B8860B; margin-bottom:14px; text-transform:uppercase;">
+        New Employee Joining Desk QR
+      </div>
+
+      <div id="qrCodeContainer" style="background:#fff; padding:16px; border:2px dashed #94A3B8; border-radius:10px; display:inline-block; margin-bottom:12px;">
+        <img id="qrImg" width="220" height="220" alt="Scanning QR Code..." style="display:block; margin:0 auto;">
+      </div>
+
+      <p style="font-size:12px; color:#475569; margin:0 0 12px; line-height:1.5;">
+        📱 Scan with mobile camera to open Joining Form.<br>
+        (Candidate will only view the form, agreements, and signature; HR dashboard remains strictly hidden).
+      </p>
+
+      <div style="font-size:11px; background:#F1F5F9; padding:6px 10px; border-radius:4px; word-break:break-all; margin-bottom:14px;" id="qrLinkDisplay">
+        <!-- Live URL -->
+      </div>
+
+      <div class="btn-row" style="justify-content:center;">
+        <button class="btn green sm" onclick="printQRCard()">🖨️ Print Desk QR Standee</button>
+        <button class="btn g sm" onclick="closeQRModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+/* ==========================================================================
+   KUBER ALPHA RESEARCH — EMPLOYEE MANAGEMENT & ONBOARDING SYSTEM
+   SEBI Registered Research Analyst • Reg No. INH000013642
+   ========================================================================== */
+
+const COMPANY = {
+  name: "KUBER ALPHA RESEARCH",
+  proprietor: "KUBER ALPHA RESEARCH BY AAKASH RATHORE",
+  sebiReg: "INH000013642",
+  type: "SEBI Registered Research Analyst",
+  address: "Office no. A-101-102, Anmol Spaces, 20 Baikunth dham khajarana main road, Indore, Madhya Pradesh - 452001",
+  mobile: "9669522522",
+  city: "Indore",
+  state: "Madhya Pradesh"
+};
+
+const STORAGE_KEY = "kuber_alpha_onboarding_db_v4";
+const CURRENT_ID_KEY = "kuber_alpha_current_emp_id_v4";
+const HR_PIN_KEY = "kuber_alpha_hr_pin_v4";
+
+function $(id) { return document.getElementById(id); }
+function esc(s) {
+  if (s == null) return "";
+  return String(s).replace(/[&<>"']/g, function(m) {
+    return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m];
+  });
+}
+function fmtDate(iso) {
+  if (!iso) return "____ / ____ / ______";
+  var parts = iso.split("-");
+  if (parts.length === 3) return parts[2] + " / " + parts[1] + " / " + parts[0];
+  return iso;
+}
+function todayStr() {
+  var d = new Date();
+  var dd = ("0" + d.getDate()).slice(-2);
+  var mm = ("0" + (d.getMonth() + 1)).slice(-2);
+  return dd + " / " + mm + " / " + d.getFullYear();
+}
+function todayISO() {
+  var d = new Date();
+  var dd = ("0" + d.getDate()).slice(-2);
+  var mm = ("0" + (d.getMonth() + 1)).slice(-2);
+  return d.getFullYear() + "-" + mm + "-" + dd;
+}
+function fill(v, placeholder) {
+  v = (v == null) ? "" : String(v).trim();
+  if (!v) return '<mark class="autofill">' + (placeholder || "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;") + '</mark>';
+  return '<mark class="autofill">' + esc(v) + '</mark>';
+}
+
+// Database Layer
+function getDB() {
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || { employees: {} };
+  } catch(e) {
+    return { employees: {} };
+  }
+}
+function saveDB(db) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+  } catch(e) {
+    console.error("Storage save failed", e);
+  }
+}
+function getCurrentEmpId() {
+  return localStorage.getItem(CURRENT_ID_KEY) || null;
+}
+function setCurrentEmpId(id) {
+  if (id) localStorage.setItem(CURRENT_ID_KEY, id);
+  else localStorage.removeItem(CURRENT_ID_KEY);
+}
+function getHRPin() {
+  return localStorage.getItem(HR_PIN_KEY) || "1234";
+}
+
+let isHRUnlocked = false;
+let currentEmp = null;
+
+function loadCurrentEmp() {
+  const db = getDB();
+  const id = getCurrentEmpId();
+  if (id && db.employees[id]) {
+    currentEmp = db.employees[id];
+  } else {
+    const keys = Object.keys(db.employees);
+    if (keys.length > 0) {
+      currentEmp = db.employees[keys[0]];
+      setCurrentEmpId(currentEmp.id);
+    } else {
+      currentEmp = createEmptyEmp();
+    }
+  }
+  populateFormFields(currentEmp);
+  updateStatusChips();
+  renderAllDocuments();
+  updateVideoScript();
+}
+
+function createEmptyEmp() {
+  return {
+    id: "EMP_" + Date.now(),
+    status: "active",
+    name: "", parent: "", dob: "", gender: "", marital: "", mobile: "", altmobile: "", email: "",
+    curaddr: "", permaddr: "", pan: "", aadhaar: "", dlpp: "", uan: "",
+    convicted: "No", convictedDetails: "",
+    position: "Human Resource Executive", dept: "Human Resources", manager: "Aakash Rathore", location: "Indore (M.P.)", doj: "", probation: "1", salary: "20000", empid: "",
+    // Offer Letter configuration
+    olType: "hr",
+    olHrDesig: "Human Resource Executive", olHrSalary: "20000", olHrTarget: "5", olHrProb: "1",
+    olSalesDesig: "Senior Business Associate (Sales)", olSalesBasic: "33000", olSalesAtt: "1000", olSalesClient: "1000", olSalesTotal: "35000", olSalesTarget: "5,25,000 (+18% GST)", olSalesMinReg: "3", olSalesDeductPct: "30", olSalesBonus: "6000", olSalesOverachieve: "10",
+    olPctDesig: "Individual Business Associate (BA)", olPctCommission: "30", olPctTarget: "200000",
+    // Education & Work
+    e10Inst: "", e10Year: "", e10Pct: "",
+    e12Inst: "", e12Year: "", e12Pct: "",
+    egradInst: "", egradYear: "", egradPct: "",
+    eothInst: "", eothYear: "", eothPct: "",
+    wCompany: "", wDesig: "", wDuration: "", wSalary: "", wReason: "",
+    wCursal: "", wExpsal: "", wNotice: "", wAvail: "",
+    skills: { sk_office: false, sk_market: false, sk_sales: false, sk_crm: false, sk_trading: false, sk_comm: false },
+    skOther: "",
+    bank: "", bankHolder: "", bankAcc: "", bankIfsc: "", upi: "",
+    emName: "", emRel: "", emMobile: "", emAddr: "",
+    rfName: "", rfCompany: "", rfDesig: "", rfMobile: "",
+    docs: {},
+    signatureDataUrl: null,
+    videoUrl: null,
+    // Exit / F&F details
+    exitDate: null, exitReason: null, noticePeriodServed: null, settlementDate: null,
+    settlementAmountPaid: null, clearanceStatus: null, settlementRemarks: null,
+    updatedAt: new Date().toISOString()
+  };
+}
+
+/* --------------------------------------------------------------------------
+   FORM BINDING & STRICT FORMATTING
+   -------------------------------------------------------------------------- */
+const FORM_MAP = {
+  f_name: "name", f_parent: "parent", f_dob: "dob", f_gender: "gender", f_marital: "marital",
+  f_mobile: "mobile", f_altmobile: "altmobile", f_email: "email",
+  f_curaddr: "curaddr", f_permaddr: "permaddr",
+  f_pan: "pan", f_aadhaar: "aadhaar", f_dlpp: "dlpp", f_uan: "uan",
+  f_convicted: "convicted", f_convicted_details: "convictedDetails",
+  f_position: "position", f_dept: "dept", f_manager: "manager", f_location: "location",
+  f_doj: "doj", f_probation: "probation", f_salary: "salary", f_empid: "empid",
+  ol_type: "olType",
+  ol_hr_salary: "olHrSalary", ol_hr_target: "olHrTarget", ol_hr_prob: "olHrProb",
+  ol_sales_basic: "olSalesBasic", ol_sales_att: "olSalesAtt", ol_sales_client: "olSalesClient",
+  ol_sales_total: "olSalesTotal", ol_sales_target: "olSalesTarget", ol_sales_min_reg: "olSalesMinReg",
+  ol_sales_deduct_pct: "olSalesDeductPct", ol_sales_bonus: "olSalesBonus", ol_sales_overachieve: "olSalesOverachieve",
+  ol_pct_commission: "olPctCommission", ol_pct_target: "olPctTarget",
+  e10_inst: "e10Inst", e10_year: "e10Year", e10_pct: "e10Pct",
+  e12_inst: "e12Inst", e12_year: "e12Year", e12_pct: "e12Pct",
+  egrad_inst: "egradInst", egrad_year: "egradYear", egrad_pct: "egradPct",
+  eoth_inst: "eothInst", eoth_year: "eothYear", eoth_pct: "eothPct",
+  w_company: "wCompany", w_desig: "wDesig", w_duration: "wDuration", w_salary: "wSalary", w_reason: "wReason",
+  w_cursal: "wCursal", w_expsal: "wExpsal", w_notice: "wNotice", w_avail: "wAvail",
+  sk_other: "skOther",
+  b_bank: "bank", b_holder: "bankHolder", b_acc: "bankAcc", b_ifsc: "bankIfsc", b_upi: "upi",
+  em_name: "emName", em_rel: "emRel", em_mobile: "emMobile", em_addr: "emAddr",
+  rf_name: "rfName", rf_company: "rfCompany", rf_desig: "rfDesig", rf_mobile: "rfMobile"
+};
+
+// Format Aadhaar: XXXX XXXX XXXX (12 digits)
+$("f_aadhaar").addEventListener("input", function(e) {
+  let v = e.target.value.replace(/\D/g, "").slice(0, 12);
+  let parts = [];
+  for (let i = 0; i < v.length; i += 4) {
+    parts.push(v.slice(i, i + 4));
+  }
+  e.target.value = parts.join(" ");
+});
+
+// Format PAN: Uppercase, 10 chars
+$("f_pan").addEventListener("input", function(e) {
+  e.target.value = e.target.value.toUpperCase().slice(0, 10);
+});
+
+// Format Bank Account: Numbers only, max 18
+$("b_acc").addEventListener("input", function(e) {
+  e.target.value = e.target.value.replace(/\D/g, "").slice(0, 18);
+});
+
+// Format IFSC: Uppercase, max 11
+$("b_ifsc").addEventListener("input", function(e) {
+  e.target.value = e.target.value.toUpperCase().slice(0, 11);
+});
+
+// Sync Deduction % Note in Sales Profile
+function updateDeductNote() {
+  const v = $("ol_sales_deduct_pct").value || "30";
+  if ($("disp_deduct_note")) $("disp_deduct_note").textContent = v;
+}
+
+// Sync Designation & Salary on Offer Type Change
+function handleOfferTypeChange() {
+  const t = $("ol_type").value;
+  $("box_ol_hr").style.display = (t === "hr") ? "block" : "none";
+  $("box_ol_sales").style.display = (t === "sales") ? "block" : "none";
+  $("box_ol_percent").style.display = (t === "percent") ? "block" : "none";
+
+  if (t === "hr") {
+    $("f_position").value = "Human Resource Executive";
+    $("f_dept").value = "Human Resources";
+    $("f_salary").value = $("ol_hr_salary").value;
+    $("f_probation").value = $("ol_hr_prob").value;
+  } else if (t === "sales") {
+    $("f_position").value = "Senior Business Associate (Sales)";
+    $("f_dept").value = "Sales & Client Acquisition";
+    calcSalesSalary();
+    updateDeductNote();
+    $("f_probation").value = "3";
+  } else if (t === "percent") {
+    $("f_position").value = "Individual Business Associate (BA)";
+    $("f_dept").value = "Business Associate / Sales";
+    $("f_salary").value = "Commission (30%)";
+    $("f_probation").value = "3";
+  }
+  updateVideoScript();
+}
+
+function calcSalesSalary() {
+  const b = parseFloat($("ol_sales_basic").value) || 0;
+  const a = parseFloat($("ol_sales_att").value) || 0;
+  const c = parseFloat($("ol_sales_client").value) || 0;
+  const tot = b + a + c;
+  $("ol_sales_total").value = tot;
+  $("f_salary").value = tot;
+  updateVideoScript();
+}
+
+function syncSalaryFromProfile() {
+  $("f_salary").value = $("ol_hr_salary").value;
+  updateVideoScript();
+}
+
+function populateFormFields(e) {
+  if (!e) return;
+  Object.keys(FORM_MAP).forEach(id => {
+    const el = $(id);
+    if (el) el.value = e[FORM_MAP[id]] || "";
+  });
+  handleOfferTypeChange();
+  ["sk_office", "sk_market", "sk_sales", "sk_crm", "sk_trading", "sk_comm"].forEach(sk => {
+    const el = $(sk);
+    if (el) el.checked = !!(e.skills && e.skills[sk]);
+  });
+  renderDocPreviews(e.docs || {});
+  renderActiveSignaturePreview(e.signatureDataUrl);
+  updateVideoScript();
+}
+
+function collectFormData() {
+  const data = currentEmp ? Object.assign({}, currentEmp) : createEmptyEmp();
+  Object.keys(FORM_MAP).forEach(id => {
+    const el = $(id);
+    if (el) data[FORM_MAP[id]] = el.value.trim();
+  });
+  data.skills = {
+    sk_office: $("sk_office").checked,
+    sk_market: $("sk_market").checked,
+    sk_sales: $("sk_sales").checked,
+    sk_crm: $("sk_crm").checked,
+    sk_trading: $("sk_trading").checked,
+    sk_comm: $("sk_comm").checked
+  };
+  data.updatedAt = new Date().toISOString();
+  return data;
+}
+
+function renderDocPreviews(docs) {
+  const docFields = [
+    { id: "photo", el: "prev_photo", label: "Photo" },
+    { id: "aadhaar", el: "prev_aadhaar", label: "Aadhaar Card" },
+    { id: "bank", el: "prev_bank", label: "Bank Proof" },
+    { id: "edu", el: "prev_edu", label: "Education Cert" },
+    { id: "pan", el: "prev_pan", label: "PAN Card" },
+    { id: "resume", el: "prev_resume", label: "Resume" },
+    { id: "explet", el: "prev_explet", label: "Experience Letter" },
+    { id: "salaryslip", el: "prev_salaryslip", label: "Salary Slip" }
+  ];
+  docFields.forEach(df => {
+    const container = $(df.el);
+    if (!container) return;
+    if (docs && docs[df.id]) {
+      container.innerHTML = "✓ " + df.label + " attached";
+      container.style.color = "var(--g)";
+    } else {
+      container.innerHTML = "";
+    }
+  });
+}
+
+function setupFileUploads() {
+  const map = {
+    doc_photo: "photo", doc_pan: "pan", doc_aadhaar: "aadhaar", doc_bank: "bank",
+    doc_resume: "resume", doc_edu: "edu", doc_explet: "explet", doc_salaryslip: "salaryslip"
+  };
+  Object.keys(map).forEach(inputId => {
+    const input = $(inputId);
+    if (!input) return;
+    input.addEventListener("change", function(ev) {
+      const file = ev.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        if (!currentEmp.docs) currentEmp.docs = {};
+        currentEmp.docs[map[inputId]] = {
+          name: file.name,
+          type: file.type,
+          data: e.target.result
+        };
+        renderDocPreviews(currentEmp.docs);
+        persistCurrentEmp();
+        renderAllDocuments();
+      };
+      reader.readAsDataURL(file);
+    });
+  });
+}
+
+function persistCurrentEmp() {
+  if (!currentEmp) return;
+  const db = getDB();
+  db.employees[currentEmp.id] = currentEmp;
+  saveDB(db);
+  setCurrentEmpId(currentEmp.id);
+  updateStatusChips();
+  renderHRTables();
+
+  // If running on office HTTP server, sync to server
+  if (window.location.protocol.startsWith('http')) {
+    fetch('/api/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(currentEmp)
+    }).catch(() => {});
+  }
+}
+
+function validateCandidateData(updated) {
+  if (!updated.name) {
+    showMsg("saveMsg", "Candidate Full Name is required.", "err");
+    $("f_name").focus();
+    return false;
+  }
+  const rawAadhaar = (updated.aadhaar || "").replace(/\s+/g, "");
+  if (!rawAadhaar || rawAadhaar.length !== 12 || !/^\d{12}$/.test(rawAadhaar)) {
+    showMsg("saveMsg", "⚠️ Aadhaar Card number must be exactly 12 digits (Mandatory).", "err");
+    $("f_aadhaar").focus();
+    return false;
+  }
+  const rawPan = (updated.pan || "").trim().toUpperCase();
+  if (rawPan && !/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(rawPan)) {
+    showMsg("saveMsg", "⚠️ PAN Card format is invalid (Format: ABCDE1234F).", "err");
+    $("f_pan").focus();
+    return false;
+  }
+  // Bank Account digits (9 to 18 digits)
+  const rawAcc = (updated.bankAcc || "").replace(/\D/g, "");
+  if (updated.bankAcc && (rawAcc.length < 9 || rawAcc.length > 18)) {
+    showMsg("saveMsg", "⚠️ Bank Account Number must contain 9 to 18 digits.", "err");
+    $("b_acc").focus();
+    return false;
+  }
+  // IFSC 11 characters
+  const rawIfsc = (updated.bankIfsc || "").trim().toUpperCase();
+  if (updated.bankIfsc && !/^[A-Z]{4}0[A-Z0-9]{6}$/.test(rawIfsc)) {
+    showMsg("saveMsg", "⚠️ IFSC Code must be 11 characters (Format: HDFC0001234, 5th character zero).", "err");
+    $("b_ifsc").focus();
+    return false;
+  }
+  return true;
+}
+
+$("btnSaveJoiner").onclick = function() {
+  const updated = collectFormData();
+  if (!validateCandidateData(updated)) return;
+
+  const docs = currentEmp.docs || {};
+  const missing = [];
+  if (!docs.aadhaar) missing.push("Aadhaar Card");
+  if (!docs.photo) missing.push("Passport Photo");
+  if (!docs.bank) missing.push("Bank Proof");
+  if (!docs.edu) missing.push("Education Certificate");
+
+  currentEmp = updated;
+  persistCurrentEmp();
+  renderAllDocuments();
+  updateVideoScript();
+
+  if (missing.length > 0) {
+    showMsg("saveMsg", `✓ Saved! Note: Please attach mandatory documents: ${missing.join(", ")}`, "warn");
+  } else {
+    showMsg("saveMsg", "✓ All candidate details & offer terms saved! All documents are auto-filled.", "ok");
+  }
+};
+
+$("btnGoToDocs").onclick = function() {
+  $("btnSaveJoiner").click();
+  switchTab("docs");
+};
+$("btnGoToSign").onclick = function() {
+  switchTab("sign");
+};
+
+/* --------------------------------------------------------------------------
+   DOCUMENT GENERATION ENGINE
+   -------------------------------------------------------------------------- */
+
+function getLetterheadHTML() {
+  return `
+    <div class="doc-letterhead">
+      <div class="comp-name">${esc(COMPANY.name)}</div>
+      <div class="comp-sub">${esc(COMPANY.type)}</div>
+      <div class="comp-reg">Registration No.: ${esc(COMPANY.sebiReg)}</div>
+      <div class="comp-addr">Address: ${esc(COMPANY.address)} | Mobile: ${esc(COMPANY.mobile)}</div>
+    </div>
+  `;
+}
+
+function getEmployeeSignatureBlock(e, extraLabel) {
+  let signPreviewHTML = "";
+  if (e.signatureDataUrl) {
+    signPreviewHTML = `<div class="sign-image-preview"><img src="${e.signatureDataUrl}" alt="Signature"></div>`;
+  } else {
+    signPreviewHTML = `<div class="sign-image-preview"><span style="font-size:10px; color:#9CA3AF">[ Physical Signature Required ]</span></div>`;
+  }
+
+  return `
+    <div class="doc-sign-block single-sign">
+      <div class="sign-box">
+        ${signPreviewHTML}
+        <div class="sign-line">${extraLabel || "Employee / Applicant Signature"}</div>
+        <div class="sign-meta">Name: <strong>${esc(e.name || "____________________")}</strong></div>
+        <div class="sign-meta">Date: ${fmtDate(e.doj) || todayStr()} | Place: ${esc(e.location || "Indore")}</div>
+      </div>
+    </div>
+  `;
+}
+
+/* 1. HR Offer Letter */
+function generateOfferHRHTML(e) {
+  const desig = e.olHrDesig || "Human Resource Executive";
+  const salary = e.olHrSalary || "20,000";
+  const target = e.olHrTarget || "5";
+  const prob = e.olHrProb || "1";
+
+  let empSignHTML = e.signatureDataUrl ? `<div class="sign-image-preview"><img src="${e.signatureDataUrl}" alt="Signature"></div>` : `<div style="height:35px"></div>`;
+
+  return `
+    <div class="doc-paper" id="paper_offerHR">
+      ${getLetterheadHTML()}
+      <div class="doc-title">OFFER LETTER – APPOINTMENT TERMS</div>
+
+      <div style="display:flex; justify-content:space-between; margin-bottom:12px; font-size:12px;">
+        <div><strong>Date:</strong> ${fill(fmtDate(e.doj) || todayStr())}</div>
+        <div><strong>Ref:</strong> KAR/HR/OL/${fill(e.empid, (e.mobile ? e.mobile.slice(-4) : "2026"))}</div>
+      </div>
+
+      <div style="font-size:12px; margin-bottom:12px;">
+        To,<br>
+        <strong>Employee Name:</strong> ${fill(e.name)}<br>
+        <strong>Employee Address:</strong> ${fill(e.curaddr)}<br>
+        <strong>Employee Contact No.:</strong> ${fill(e.mobile)}
+      </div>
+
+      <div style="font-size:13px; font-weight:700; margin-bottom:10px; color:#1F2937">
+        Subject: Appointment as ${fill(desig)}
+      </div>
+
+      <p class="doc-p">Dear <strong>${fill(e.name)}</strong>,</p>
+      <p class="doc-p">
+        We are pleased to offer you the position of <strong>${fill(desig)}</strong> at Kuber Alpha Research, a SEBI Registered Research Analyst firm (Registration No. INH000013642).
+        We believe your skills and professional approach will contribute significantly to our operational efficiency. Your role involves assisting in recruitment operations, onboarding processes, employee coordination, HR documentation, attendance tracking, and maintaining compliance standards.
+      </p>
+
+      <div class="doc-sec-title">1. POSITION DETAILS</div>
+      <table class="doc-tbl">
+        <tr>
+          <td style="width:25%"><strong>Designation</strong></td>
+          <td style="width:25%">${fill(desig)}</td>
+          <td style="width:25%"><strong>Department</strong></td>
+          <td style="width:25%">Human Resources</td>
+        </tr>
+        <tr>
+          <td><strong>Work Location</strong></td>
+          <td>${fill(e.location, "Indore (M.P.)")}</td>
+          <td><strong>Probation Period</strong></td>
+          <td>${fill(prob)} Month(s)</td>
+        </tr>
+      </table>
+
+      <div class="doc-sec-title">2. KEY RESPONSIBILITIES</div>
+      <ul class="doc-list">
+        <li>Assist in sourcing, screening, and shortlisting candidates across portals.</li>
+        <li>Coordinate interview scheduling, candidate communication, onboarding, and induction.</li>
+        <li>Maintain accurate employee records, HR databases, attendance tracking, and documentation.</li>
+        <li>Ensure confidentiality of company records and perform administrative tasks assigned by management.</li>
+      </ul>
+
+      <div class="doc-sec-title">3. SALARY &amp; PAYMENT TERMS</div>
+      <table class="doc-tbl">
+        <tr>
+          <td style="width:40%"><strong>Fixed Monthly Salary</strong></td>
+          <td style="width:60%"><strong>₹ ${fill(salary)}/- per month</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Hiring Performance Target</strong></td>
+          <td><strong>Minimum ${fill(target)} successful hirings per month</strong> are mandatory for full salary eligibility.</td>
+        </tr>
+        <tr>
+          <td><strong>Credit Date &amp; Pro-Rata</strong></td>
+          <td>Joining month calculated on pro-rata basis. Credited on or before 7th of every month.</td>
+        </tr>
+      </table>
+
+      <div class="doc-sec-title">4. LEAVE POLICY &amp; 5. OFFICE TIMINGS</div>
+      <p class="doc-p">
+        <strong>Office Timings:</strong> Monday to Friday: 9:30 AM – 6:00 PM (Reporting time: 9:15 AM). Late arrival between 9:30–10:00 AM allows 3 grace instances per month; 4th onward attracts ₹200 deduction. Arrival after 10:00 AM counts as Half Day; after 1:00 PM Full Day Absent.<br>
+        <strong>Saturdays:</strong> 1st &amp; 3rd Saturday Half Day (10:00 AM – 3:00 PM); 2nd Saturday Weekly Off; 4th Saturday Full Working (10:00 AM – 3:00 PM).<br>
+        <strong>Leaves:</strong> 1 paid leave per month (effective from 2nd month). Unapproved absence attracts 1.5x daily deduction. Continuous 3-day absence treated as job abandonment.
+      </p>
+
+      <div class="doc-sec-title">6. NOTICE PERIOD, TERMINATION &amp; JURISDICTION</div>
+      <p class="doc-p">
+        <strong>Notice Period:</strong> Mandatory 30-day written notice prior to resignation. Unserved notice may result in salary hold up to 45 days. Employment governed by laws of India, subject to Indore courts jurisdiction.
+      </p>
+
+      <!-- Signatures -->
+      <div class="doc-sign-block" style="margin-top:24px;">
+        <div class="sign-box">
+          <div class="sign-image-preview">
+            <span style="font-size:11px; font-weight:700;">For Kuber Alpha Research</span>
+          </div>
+          <div class="sign-line">Aakash Rathore (Proprietor)</div>
+          <div class="sign-meta">Authorized Signatory / HR Dept</div>
+        </div>
+
+        <div class="sign-box">
+          ${empSignHTML}
+          <div class="sign-line">Accepted By Employee</div>
+          <div class="sign-meta">Name: <strong>${esc(e.name || "____________________")}</strong></div>
+          <div class="sign-meta">Date: ${fmtDate(e.doj) || todayStr()}</div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+/* 2. Sales Offer Letter */
+function generateOfferSalesHTML(e) {
+  const desig = e.olSalesDesig || "Senior Business Associate (Sales)";
+  const basic = e.olSalesBasic || "33,000";
+  const att = e.olSalesAtt || "1,000";
+  const client = e.olSalesClient || "1,000";
+  const total = e.olSalesTotal || "35,000";
+  const target = e.olSalesTarget || "5,25,000 (+18% GST)";
+  const minReg = e.olSalesMinReg || "3";
+  const deductPct = e.olSalesDeductPct || "30";
+  const bonus = e.olSalesBonus || "6,000";
+  const overachieve = e.olSalesOverachieve || "10";
+
+  let empSignHTML = e.signatureDataUrl ? `<div class="sign-image-preview"><img src="${e.signatureDataUrl}" alt="Signature"></div>` : `<div style="height:35px"></div>`;
+
+  return `
+    <div class="doc-paper" id="paper_offerSales">
+      ${getLetterheadHTML()}
+      <div class="doc-title">OFFER LETTER – APPOINTMENT TERMS (SALES)</div>
+
+      <div style="display:flex; justify-content:space-between; margin-bottom:12px; font-size:12px;">
+        <div><strong>Date:</strong> ${fill(fmtDate(e.doj) || todayStr())}</div>
+        <div><strong>Ref:</strong> KAR/SALES/OL/${fill(e.empid, (e.mobile ? e.mobile.slice(-4) : "2026"))}</div>
+      </div>
+
+      <div style="font-size:12px; margin-bottom:12px;">
+        To,<br>
+        <strong>Employee Name:</strong> ${fill(e.name)}<br>
+        <strong>Employee Address:</strong> ${fill(e.curaddr)}<br>
+        <strong>Subject:</strong> Appointment as ${fill(desig)}
+      </div>
+
+      <p class="doc-p">Dear <strong>${fill(e.name)}</strong>,</p>
+      <p class="doc-p">
+        We are delighted to welcome you to <strong>KUBER ALPHA RESEARCH BY AAKASH RATHORE</strong>, a SEBI Registered Research Analyst (Reg. No. INH000013642).
+        As part of our sales workforce, you will play a crucial role in driving growth while maintaining strict compliance with SEBI Research Analyst regulations.
+      </p>
+
+      <div class="doc-sec-title">1. COMPENSATION &amp; SALARY STRUCTURE</div>
+      <table class="doc-tbl">
+        <tr>
+          <td style="width:50%">Basic Salary</td>
+          <td style="width:50%">₹ ${fill(basic)} per month</td>
+        </tr>
+        <tr>
+          <td>Attendance Allowance</td>
+          <td>₹ ${fill(att)} per month</td>
+        </tr>
+        <tr>
+          <td>5 Paid Client Allowance</td>
+          <td>₹ ${fill(client)} per month</td>
+        </tr>
+        <tr style="background:#F1F5F9; font-weight:700;">
+          <td>Total Monthly Salary</td>
+          <td>₹ ${fill(total)} per month (Credited on 7th)</td>
+        </tr>
+      </table>
+
+      <div class="doc-sec-title">2. DEDUCTION NOTE &amp; PERFORMANCE CRITERIA</div>
+      <ul class="doc-list">
+        <li>The employee must achieve a minimum of 25% of the assigned monthly sales target to be eligible for salary.</li>
+        <li><strong>≥50% sales achievement:</strong> Eligible for full basic salary, subject to attendance rules.</li>
+        <li><strong>Below 50% sales achievement:</strong> A deduction of <strong>${fill(deductPct)}%</strong> will be applied to the basic salary.</li>
+        <li><strong>Zero Sales Achievement:</strong> No salary will be payable for that month.</li>
+        <li><strong>Minimum Registrations:</strong> At least <strong>${fill(minReg)} successful paid registrations</strong> during the month.</li>
+      </ul>
+
+      <div class="doc-sec-title">3. INCENTIVES, BONUS &amp; TARGETS</div>
+      <table class="doc-tbl">
+        <tr>
+          <td style="width:40%"><strong>Monthly Sales Target</strong></td>
+          <td style="width:60%"><strong>₹ ${fill(target)}</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Performance Bonus</strong></td>
+          <td>₹ ${fill(bonus)}/- fixed bonus on successful completion of monthly target.</td>
+        </tr>
+        <tr>
+          <td><strong>Overachievement Incentive</strong></td>
+          <td>${fill(overachieve)}% above monthly target after GST (Released on 15th of succeeding month).</td>
+        </tr>
+      </table>
+
+      <div class="doc-sec-title">4. PIP, OFFICE TIMINGS, NOTICE &amp; SERVICE COMMITMENT</div>
+      <p class="doc-p">
+        <strong>PIP:</strong> Average sales &lt;50% in 3 consecutive months triggers PIP. Target &lt;30% leads to termination.<br>
+        <strong>Timings:</strong> 9:00 AM – 6:00 PM (Report by 9:15 AM). 1st &amp; 3rd Saturday Half Day (10am-3pm), 2nd off, 4th full working (9am-6pm).<br>
+        <strong>Commitment:</strong> Minimum service commitment of <strong>3 months</strong> from date of joining. 30-day notice period required for resignation. Jurisdiction: Indore, M.P.
+      </p>
+
+      <!-- Signatures -->
+      <div class="doc-sign-block" style="margin-top:24px;">
+        <div class="sign-box">
+          <div class="sign-image-preview">
+            <span style="font-size:11px; font-weight:700;">For Kuber Alpha Research</span>
+          </div>
+          <div class="sign-line">Aakash Rathore (Proprietor)</div>
+          <div class="sign-meta">Authorized Signatory</div>
+        </div>
+
+        <div class="sign-box">
+          ${empSignHTML}
+          <div class="sign-line">Accepted By Employee</div>
+          <div class="sign-meta">Name: <strong>${esc(e.name || "____________________")}</strong></div>
+          <div class="sign-meta">Date: ${fmtDate(e.doj) || todayStr()}</div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+/* 3. Percentage Base Working Offer Letter (BA) */
+function generateOfferPercentHTML(e) {
+  const desig = e.olPctDesig || "Individual Business Associate (BA)";
+  const comm = e.olPctCommission || "30";
+  const target = e.olPctTarget || "200000";
+
+  let empSignHTML = e.signatureDataUrl ? `<div class="sign-image-preview"><img src="${e.signatureDataUrl}" alt="Signature"></div>` : `<div style="height:35px"></div>`;
+
+  return `
+    <div class="doc-paper" id="paper_offerPercent">
+      ${getLetterheadHTML()}
+      <div class="doc-title">OFFER LETTER – APPOINTMENT TERMS (BUSINESS ASSOCIATE)</div>
+
+      <div style="display:flex; justify-content:space-between; margin-bottom:12px; font-size:12px;">
+        <div><strong>Date:</strong> ${fill(fmtDate(e.doj) || todayStr())}</div>
+        <div><strong>Ref:</strong> KAR/BA/OL/${fill(e.empid, (e.mobile ? e.mobile.slice(-4) : "2026"))}</div>
+      </div>
+
+      <div style="font-size:12px; margin-bottom:12px;">
+        To,<br>
+        <strong>Employee Name:</strong> ${fill(e.name)}<br>
+        <strong>Employee Address:</strong> ${fill(e.curaddr)}<br>
+        <strong>Subject:</strong> ${fill(desig)}
+      </div>
+
+      <p class="doc-p">Dear <strong>${fill(e.name)}</strong>,</p>
+      <p class="doc-p">
+        We are delighted to welcome you to <strong>KUBER ALPHA RESEARCH BY AAKASH RATHORE</strong>, a SEBI Registered Research Analyst (Reg. No. INH000013642).
+        At Kuber Alpha research, we deliver compliant and transparent research advisory services. As an Individual Business Associate (BA), you will contribute to business expansion in accordance with statutory guidelines.
+      </p>
+
+      <div class="doc-sec-title">1. SALARY / COMMISSION STRUCTURE</div>
+      <table class="doc-tbl">
+        <tr>
+          <td style="width:40%"><strong>Revenue Share Commission</strong></td>
+          <td style="width:60%"><strong>${fill(comm)}% of the monthly sales revenue generated</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Minimum Target Condition</strong></td>
+          <td>Provided the minimum monthly sales target of <strong>₹ ${fill(target)}</strong> is achieved.</td>
+        </tr>
+        <tr>
+          <td><strong>Zero Sales Clause</strong></td>
+          <td>If the monthly sales revenue is zero, no salary/commission will be payable for that month.</td>
+        </tr>
+      </table>
+
+      <div class="doc-sec-title">2. LEAVE POLICY &amp; 3. OFFICE TIMINGS</div>
+      <p class="doc-p">
+        <strong>Leaves:</strong> During probation: No paid leave. Post-probation: 1 paid leave per month. Uninformed leave deducted at 1.5x daily rate.<br>
+        <strong>Working Hours:</strong> Monday to Friday: 9:00 AM – 6:00 PM (Report by 9:15 AM). Late coming (9:15-10:00 AM) allowed 3 grace instances; 4th onward ₹200 deduction. Arrival after 10:00 AM treated as Half Day; after 1:00 PM Absent.<br>
+        <strong>Saturdays:</strong> 1st &amp; 3rd Saturday Half day (10:00 AM - 3:00 PM); 2nd Saturday off; 4th Saturday Full day (9:00 AM - 6:00 PM).
+      </p>
+
+      <div class="doc-sec-title">4. SEBI COMPLIANCE &amp; 5. NOTICE PERIOD POLICY</div>
+      <p class="doc-p">
+        You must maintain strict confidentiality of client data and research strategies. All client payments must be accepted only through official Kuber Alpha research accounts. No personal fund collection, assured returns, or unauthorized calls permitted.<br>
+        <strong>Notice Period:</strong> Minimum <strong>30 days prior notice</strong> before resignation. The company reserves the right to hold salary up to 45 days for Full &amp; Final settlement. Jurisdiction: Indore, Madhya Pradesh.
+      </p>
+
+      <!-- Signatures -->
+      <div class="doc-sign-block" style="margin-top:24px;">
+        <div class="sign-box">
+          <div class="sign-image-preview">
+            <span style="font-size:11px; font-weight:700;">For Kuber Alpha Research</span>
+          </div>
+          <div class="sign-line">Aakash Rathore (Proprietor)</div>
+          <div class="sign-meta">Authorized Signatory</div>
+        </div>
+
+        <div class="sign-box">
+          ${empSignHTML}
+          <div class="sign-line">Accepted By:</div>
+          <div class="sign-meta">Name: <strong>${esc(e.name || "____________________")}</strong></div>
+          <div class="sign-meta">Date: ${fmtDate(e.doj) || todayStr()}</div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+/* 4. Hindi Police Verification Form (Exact Replica of Indore IT Cell Form with Palasia Thana) */
+function generatePoliceVerifHTML(e) {
+  const fixedOwnerName = "आकाश राठौर / Kuber Alpha Research";
+  const fixedOwnerAddress = "Office no. A-101-102, Anmol Spaces, 20 Baikunth dham khajarana main road, Indore";
+  const fixedOwnerMobile = "9669522522";
+  const fixedLocalThana = "पलासिया, इन्दौर";
+  const fixedOfficeName = "Kuber Alpha Research";
+
+  const empName = e.name || "";
+  const empParent = e.parent || "";
+  const empPermAddr = e.permaddr || "";
+  const permThanaDist = e.permaddr ? e.permaddr.split(",").slice(-2).join(", ") : "";
+  const empMobile = e.mobile || "";
+
+  // Emergency contact details as requested
+  const emMobile = e.emMobile || "";
+  const emNameRel = e.emName ? (e.emName + (e.emRel ? " (" + e.emRel + ")" : "")) : "";
+  const emAddr = e.emAddr || e.curaddr || "";
+
+  let photoHTML = "";
+  if (e.docs && e.docs.photo && e.docs.photo.data) {
+    photoHTML = `<img src="${e.docs.photo.data}" alt="Photo" style="width:100%; height:100%; object-fit:cover;">`;
+  } else {
+    photoHTML = `<div style="font-size:11px; font-weight:700; line-height:1.35; color:#374151;">नवीनतम फोटो<br>किरायेदार/नौकर</div>`;
+  }
+
+  let empSignHTML = "";
+  if (e.signatureDataUrl) {
+    empSignHTML = `<div style="height:32px; display:flex; align-items:flex-end; justify-content:center; margin-bottom:2px;"><img src="${e.signatureDataUrl}" alt="Sign" style="max-height:32px; max-width:130px; object-fit:contain;"></div>`;
+  } else {
+    empSignHTML = `<div style="height:32px;"></div>`;
+  }
+
+  // MP Police Emblem SVG
+  const policeSvg = `
+    <svg width="48" height="48" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="50" cy="50" r="46" fill="#FFFFFF" stroke="#000000" stroke-width="2.5"/>
+      <circle cx="50" cy="50" r="41" fill="#FFFFFF" stroke="#000000" stroke-width="1.2" stroke-dasharray="2,2"/>
+      <path d="M42 22 C42 16 46 14 50 14 C54 14 58 16 58 22 C58 27 55 29 55 33 L45 33 C45 29 42 27 42 22 Z" fill="#000000"/>
+      <circle cx="46" cy="20" r="2" fill="#FFFFFF"/>
+      <circle cx="54" cy="20" r="2" fill="#FFFFFF"/>
+      <rect x="44" y="32" width="12" height="3" fill="#000000"/>
+      <polygon points="50,38 53,46 62,47 55,53 57,62 50,57 43,62 45,53 38,47 47,46" fill="#000000" stroke="#000000" stroke-width="1"/>
+      <circle cx="50" cy="51" r="5" fill="#FFFFFF"/>
+      <circle cx="50" cy="51" r="2" fill="#000000"/>
+      <path d="M22 72 Q50 64 78 72 L74 81 Q50 74 26 81 Z" fill="#000000"/>
+      <text x="50" y="78" font-size="7" font-weight="bold" fill="#FFFFFF" text-anchor="middle" font-family="'Segoe UI', sans-serif">म.प्र. पुलिस</text>
+      <text x="50" y="91" font-size="6" font-weight="bold" fill="#000000" text-anchor="middle" font-family="'Segoe UI', sans-serif">देशभक्ति - जनसेवा</text>
+    </svg>
+  `;
+
+  return `
+    <div class="doc-paper police-hindi-paper" id="paper_policeVerif">
+      <div class="police-header">
+        <div class="police-dept-title">कार्यालय आई. टी. सेल जिला इन्दौर (म. प्र.)</div>
+        <div class="police-logo-wrap">
+          ${policeSvg}
+        </div>
+        <div class="police-form-title">किरायेदार/नौकर सत्यापन फार्म</div>
+      </div>
+
+      <!-- मकान मालिक बॉक्स (FIXED VALUES & BLANK FATHER NAME) -->
+      <div class="police-box-makan">
+        <div class="police-row">
+          <span class="p-lbl" style="width:130px;">नाम मकान मालिक</span>
+          <span class="p-col">:</span>
+          <span class="p-val" style="font-weight:700;">${fixedOwnerName}</span>
+        </div>
+        <div class="police-row">
+          <span class="p-lbl" style="width:130px;">पिता का नाम</span>
+          <span class="p-col">:</span>
+          <span class="p-val">&nbsp;</span>
+        </div>
+        <div class="police-row">
+          <span class="p-lbl" style="width:130px;">पूर्ण पता</span>
+          <span class="p-col">:</span>
+          <span class="p-val">${fixedOwnerAddress}</span>
+        </div>
+        <div class="police-row" style="margin-bottom:0;">
+          <span class="p-lbl" style="width:130px;">&nbsp;</span>
+          <span class="p-col">&nbsp;</span>
+          <div style="flex:1; display:flex; gap:16px;">
+            <div style="flex:1; display:flex; align-items:flex-end;">
+              <span style="font-weight:700; white-space:nowrap;">मोबाइल नं. :</span>
+              <span class="p-val" style="margin-left:4px;">${fixedOwnerMobile}</span>
+            </div>
+            <div style="width:220px; display:flex; align-items:flex-end;">
+              <span style="font-weight:700; white-space:nowrap;">थाना :</span>
+              <span class="p-val" style="margin-left:4px; font-weight:700;">${fixedLocalThana}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- किरायेदार/नौकर विवरण With Photo Box on Right -->
+      <div style="display:flex; gap:14px; margin-top:6px;">
+        <div style="flex:1;">
+          <div class="police-row">
+            <span class="p-lbl" style="width:135px;">नाम किरायेदार/नौकर</span>
+            <span class="p-col">:</span>
+            <span class="p-val">${fill(empName)}</span>
+          </div>
+          <div class="police-row">
+            <span class="p-lbl" style="width:135px;">पिता का नाम</span>
+            <span class="p-col">:</span>
+            <span class="p-val">${fill(empParent)}</span>
+          </div>
+          <div class="police-row">
+            <span class="p-lbl" style="width:135px;">स्थाई पता मय थाना</span>
+            <span class="p-col">:</span>
+            <span class="p-val">${fill(empPermAddr)}</span>
+          </div>
+          <div class="police-row">
+            <span class="p-lbl" style="width:135px;">व जिला सहित</span>
+            <span class="p-col">:</span>
+            <span class="p-val">${fill(permThanaDist)}</span>
+          </div>
+          <div class="police-row">
+            <span class="p-lbl" style="width:135px;">&nbsp;</span>
+            <span class="p-col">&nbsp;</span>
+            <div style="flex:1; display:flex; justify-content:flex-end; align-items:flex-end;">
+              <span style="font-weight:700; white-space:nowrap;">मोबा. :</span>
+              <span class="p-val" style="max-width:220px; margin-left:4px;">${fill(empMobile)}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="police-photo-box">
+          ${photoHTML}
+        </div>
+      </div>
+
+      <!-- सदस्य संख्या (BLANK AS REQUESTED) -->
+      <div class="police-row" style="margin-top:6px;">
+        <span class="p-lbl" style="width:135px;">सदस्य संख्या</span>
+        <span class="p-col">:</span>
+        <div style="flex:1; display:flex; gap:24px;">
+          <div style="flex:1; display:flex; align-items:flex-end;">
+            <span style="font-weight:700;">पुरुष :</span>
+            <span class="p-val" style="margin-left:4px;">&nbsp;</span>
+          </div>
+          <div style="flex:1; display:flex; align-items:flex-end;">
+            <span style="font-weight:700;">महिला :</span>
+            <span class="p-val" style="margin-left:4px;">&nbsp;</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- सदस्यों का नाम व उम्र (BLANK AS REQUESTED) -->
+      <div class="police-row">
+        <span class="p-lbl" style="width:135px;">सदस्यों का नाम व उम्र</span>
+        <span class="p-col">:</span>
+        <span class="p-val">&nbsp;</span>
+      </div>
+      <div class="police-row">
+        <span class="p-lbl" style="width:135px;">&nbsp;</span>
+        <span class="p-col">&nbsp;</span>
+        <span class="p-val">&nbsp;</span>
+      </div>
+
+      <!-- कार्यालय/कॉलेज (ONLY KUBER ALPHA RESEARCH FIXED, ADDRESS BLANK) -->
+      <div class="police-row">
+        <span class="p-lbl" style="width:135px;">कार्यालय/कॉलेज</span>
+        <span class="p-col">:</span>
+        <span class="p-val" style="font-weight:700;">${fixedOfficeName}</span>
+      </div>
+      <div class="police-row">
+        <span class="p-lbl" style="width:135px;">का नाम/पता</span>
+        <span class="p-col">:</span>
+        <div style="flex:1; display:flex; gap:16px;">
+          <span class="p-val">&nbsp;</span>
+          <div style="width:230px; display:flex; align-items:flex-end;">
+            <span style="font-weight:700; white-space:nowrap;">मोबा. नं. :</span>
+            <span class="p-val" style="margin-left:4px;">&nbsp;</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- व्यवसाय BLANK, मो.नं. emergency number -->
+      <div class="police-row">
+        <span class="p-lbl" style="width:135px;">व्यवसाय</span>
+        <span class="p-col">:</span>
+        <div style="flex:1; display:flex; gap:16px;">
+          <span class="p-val">&nbsp;</span>
+          <div style="width:310px; display:flex; align-items:flex-end;">
+            <span style="font-weight:700; white-space:nowrap;">किरायेदार/नौकर का मो.नं. :</span>
+            <span class="p-val" style="margin-left:4px;">${fill(emMobile)}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- स्थानीय रिश्तेदार/पहचानकर्ता (EMERGENCY CONTACT DETAILS) -->
+      <div class="police-row">
+        <span class="p-lbl" style="width:135px;">स्थानीय रिश्तेदार/</span>
+        <span class="p-col">:</span>
+        <span class="p-val">${fill(emNameRel)}</span>
+      </div>
+      <div class="police-row">
+        <span class="p-lbl" style="width:135px;">पहचानकर्ता का</span>
+        <span class="p-col">:</span>
+        <span class="p-val">&nbsp;</span>
+      </div>
+      <div class="police-row">
+        <span class="p-lbl" style="width:135px;">नाम/पता</span>
+        <span class="p-col">:</span>
+        <span class="p-val">${fill(emAddr)}</span>
+      </div>
+
+      <!-- संलग्न -->
+      <div style="font-size:11.5px; font-weight:700; margin:10px 0 16px;">
+        संलग्न : आई.डी. की छायाप्रति मय दो पासपोर्ट साईज फोटो एवं एक पोस्टकार्ड साईज फोटो।
+      </div>
+
+      <!-- हस्ताक्षर पंक्ति 1 -->
+      <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-top:20px; font-size:12px; font-weight:700;">
+        <div style="min-width:210px; text-align:center;">
+          <div style="height:32px;"></div>
+          <div style="border-top:1.5px solid #000; padding-top:4px;">हस्ताक्षर मकान/फर्म मालिक</div>
+        </div>
+        <div style="min-width:210px; text-align:center;">
+          ${empSignHTML}
+          <div style="border-top:1.5px solid #000; padding-top:4px;">हस्ताक्षर किरायेदार/नौकर</div>
+        </div>
+      </div>
+
+      <!-- घोषणा-पत्र -->
+      <div class="police-ghoshna-title">घोषणा-पत्र</div>
+
+      <div class="police-ghoshna-text">
+        मैं <span style="display:inline-block; min-width:240px; border-bottom:1px dotted #000; text-align:center; font-weight:700;">${fill(empName)}</span> द्वारा दी गई उपरोक्त जानकारी पूर्णतः सत्य है।
+      </div>
+      <div class="police-ghoshna-text" style="margin-top:4px;">
+        असत्य पाये जाने पर इसकी पूर्ण जवाबदारी मेरी होगी। यदि मैं किसी अपराध/आपराधिक घटना में संलग्न पाया जाता हूँ तो मैं स्वयं इसके लिए जवाबदेय रहूँगा।
+      </div>
+
+      <!-- घोषणा-पत्र हस्ताक्षर (Bottom Right) -->
+      <div style="display:flex; justify-content:flex-end; margin-top:22px;">
+        <div style="min-width:220px; text-align:center; font-size:12px; font-weight:700;">
+          ${empSignHTML}
+          <div style="border-top:1.5px solid #000; padding-top:4px;">हस्ताक्षर किरायेदार/नौकर</div>
+          <div style="font-size:11px; font-weight:normal; color:#4B5563; margin-top:2px;">(नाम: ${esc(empName || "________________")})</div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+/* 5. Employment Application Form */
+function generateAppFormHTML(e) {
+  return `
+    <div class="doc-paper" id="paper_appForm">
+      ${getLetterheadHTML()}
+      <div class="doc-title">EMPLOYMENT APPLICATION FORM</div>
+
+      <div style="display:flex; justify-content:space-between; margin-bottom:12px; font-size:12px;">
+        <div><strong>Date:</strong> ${fill(todayStr())}</div>
+        <div><strong>Position Applied For:</strong> ${fill(e.position, "Designation")}</div>
+      </div>
+
+      <div class="doc-sec-title">1. PERSONAL DETAILS</div>
+      <table class="doc-tbl">
+        <tr>
+          <td style="width:30%"><strong>Full Name</strong></td>
+          <td style="width:70%">${fill(e.name)}</td>
+        </tr>
+        <tr>
+          <td><strong>Father's / Mother's Name</strong></td>
+          <td>${fill(e.parent)}</td>
+        </tr>
+        <tr>
+          <td><strong>Date of Birth</strong></td>
+          <td>${fill(fmtDate(e.dob))} &nbsp;&nbsp;&nbsp;&nbsp; <strong>Gender:</strong> ${fill(e.gender)} &nbsp;&nbsp;&nbsp;&nbsp; <strong>Marital Status:</strong> ${fill(e.marital)}</td>
+        </tr>
+        <tr>
+          <td><strong>Mobile Number</strong></td>
+          <td>${fill(e.mobile)} &nbsp;&nbsp;&nbsp;&nbsp; <strong>Alternate Contact:</strong> ${fill(e.altmobile, "N/A")}</td>
+        </tr>
+        <tr>
+          <td><strong>Email ID</strong></td>
+          <td>${fill(e.email)}</td>
+        </tr>
+        <tr>
+          <td><strong>Current Address</strong></td>
+          <td>${fill(e.curaddr)}</td>
+        </tr>
+        <tr>
+          <td><strong>Permanent Address</strong></td>
+          <td>${fill(e.permaddr)}</td>
+        </tr>
+      </table>
+
+      <div class="doc-sec-title">2. IDENTITY &amp; VERIFICATION DETAILS</div>
+      <table class="doc-tbl">
+        <tr>
+          <td style="width:30%"><strong>Aadhaar Number</strong></td>
+          <td style="width:70%">${fill(e.aadhaar)}</td>
+        </tr>
+        <tr>
+          <td><strong>PAN Number</strong></td>
+          <td>${fill(e.pan, "N/A")}</td>
+        </tr>
+        <tr>
+          <td><strong>Driving License / Passport</strong></td>
+          <td>${fill(e.dlpp, "N/A")}</td>
+        </tr>
+        <tr>
+          <td><strong>Criminal Case Conviction?</strong></td>
+          <td><strong>${fill(e.convicted)}</strong> ${e.convicted === "Yes" ? `(Details: ${fill(e.convictedDetails)})` : ""}</td>
+        </tr>
+      </table>
+
+      <div class="doc-sec-title">3. EDUCATIONAL QUALIFICATION</div>
+      <table class="doc-tbl">
+        <tr>
+          <th>Qualification</th>
+          <th>Institute / Board</th>
+          <th>Year</th>
+          <th>Percentage / Grade</th>
+        </tr>
+        <tr>
+          <td><strong>10th</strong></td>
+          <td>${fill(e.e10Inst, "—")}</td>
+          <td>${fill(e.e10Year, "—")}</td>
+          <td>${fill(e.e10Pct, "—")}</td>
+        </tr>
+        <tr>
+          <td><strong>12th</strong></td>
+          <td>${fill(e.e12Inst, "—")}</td>
+          <td>${fill(e.e12Year, "—")}</td>
+          <td>${fill(e.e12Pct, "—")}</td>
+        </tr>
+        <tr>
+          <td><strong>Graduation</strong></td>
+          <td>${fill(e.egradInst, "—")}</td>
+          <td>${fill(e.egradYear, "—")}</td>
+          <td>${fill(e.egradPct, "—")}</td>
+        </tr>
+        <tr>
+          <td><strong>Other / PG</strong></td>
+          <td>${fill(e.eothInst, "—")}</td>
+          <td>${fill(e.eothYear, "—")}</td>
+          <td>${fill(e.eothPct, "—")}</td>
+        </tr>
+      </table>
+
+      <div class="doc-sec-title">4. WORK EXPERIENCE</div>
+      <table class="doc-tbl">
+        <tr>
+          <th>Company Name</th>
+          <th>Designation</th>
+          <th>Duration</th>
+          <th>Current/Last Salary</th>
+          <th>Reason for Leaving</th>
+        </tr>
+        <tr>
+          <td>${fill(e.wCompany, "—")}</td>
+          <td>${fill(e.wDesig, "—")}</td>
+          <td>${fill(e.wDuration, "—")}</td>
+          <td>₹${fill(e.wSalary, "—")}</td>
+          <td>${fill(e.wReason, "—")}</td>
+        </tr>
+      </table>
+
+      <div class="doc-sec-title">5. SALARY &amp; AVAILABILITY</div>
+      <table class="doc-tbl">
+        <tr>
+          <td><strong>Current Salary:</strong> ₹${fill(e.wCursal, "—")}</td>
+          <td><strong>Expected Salary:</strong> ₹${fill(e.wExpsal, "—")}</td>
+        </tr>
+        <tr>
+          <td><strong>Notice Period in Current Company:</strong> ${fill(e.wNotice, "Immediate")}</td>
+          <td><strong>Joining Availability:</strong> ${fill(e.wAvail, "Immediate")}</td>
+        </tr>
+      </table>
+
+      <div class="doc-sec-title">6. EMERGENCY CONTACT &amp; PROFESSIONAL REFERENCE</div>
+      <table class="doc-tbl">
+        <tr>
+          <td style="width:50%">
+            <strong>Emergency Contact Person:</strong> ${fill(e.emName)}<br>
+            <strong>Relationship:</strong> ${fill(e.emRel)}<br>
+            <strong>Mobile Number:</strong> ${fill(e.emMobile)}<br>
+            <strong>Address:</strong> ${fill(e.emAddr)}
+          </td>
+          <td style="width:50%">
+            <strong>Professional Reference:</strong> ${fill(e.rfName, "—")}<br>
+            <strong>Organization &amp; Designation:</strong> ${fill(e.rfCompany, "—")} (${fill(e.rfDesig, "—")})<br>
+            <strong>Contact Number:</strong> ${fill(e.rfMobile, "—")}
+          </td>
+        </tr>
+      </table>
+
+      <div class="doc-sec-title">7. APPLICANT DECLARATION</div>
+      <p class="doc-p">
+        I hereby declare that the information provided by me in this application form is true and correct to the best of my knowledge. I understand that any false information, concealment, or misrepresentation may lead to rejection of my application or termination of employment.
+      </p>
+
+      ${getEmployeeSignatureBlock(e, "Applicant Signature")}
+    </div>
+  `;
+}
+
+/* 6. Employee Joining, Confidentiality & Compliance Declaration */
+function generateJoinDeclHTML(e) {
+  const d = e.docs || {};
+  return `
+    <div class="doc-paper" id="paper_joinDecl">
+      ${getLetterheadHTML()}
+      <div class="doc-title">EMPLOYEE JOINING, CONFIDENTIALITY &amp; COMPLIANCE DECLARATION</div>
+
+      <div style="text-align:right; font-size:12px; margin-bottom:10px;">
+        <strong>Date:</strong> ${fill(fmtDate(e.doj) || todayStr())}
+      </div>
+
+      <div class="doc-sec-title">EMPLOYEE DETAILS</div>
+      <table class="doc-tbl">
+        <tr>
+          <td><strong>Employee Name</strong></td>
+          <td>${fill(e.name)}</td>
+          <td><strong>Employee ID</strong></td>
+          <td>${fill(e.empid, "KAR-" + (e.mobile ? e.mobile.slice(-4) : "2026"))}</td>
+        </tr>
+        <tr>
+          <td><strong>Designation</strong></td>
+          <td>${fill(e.position)}</td>
+          <td><strong>Department</strong></td>
+          <td>${fill(e.dept, "Operations")}</td>
+        </tr>
+        <tr>
+          <td><strong>Reporting Manager</strong></td>
+          <td>${fill(e.manager, "Aakash Rathore")}</td>
+          <td><strong>Date of Joining</strong></td>
+          <td>${fill(fmtDate(e.doj))}</td>
+        </tr>
+        <tr>
+          <td><strong>Work Location</strong></td>
+          <td>${fill(e.location, "Indore (M.P.)")}</td>
+          <td><strong>Probation Period</strong></td>
+          <td>${fill(e.probation ? e.probation + " Months" : "1 Month")}</td>
+        </tr>
+      </table>
+
+      <div class="doc-sec-title">1. PERSONAL &amp; BANK INFORMATION</div>
+      <table class="doc-tbl">
+        <tr>
+          <td style="width:25%"><strong>Full Name</strong></td>
+          <td style="width:25%">${fill(e.name)}</td>
+          <td style="width:25%"><strong>Father's / Mother's Name</strong></td>
+          <td style="width:25%">${fill(e.parent)}</td>
+        </tr>
+        <tr>
+          <td><strong>Aadhaar Number</strong></td>
+          <td>${fill(e.aadhaar)}</td>
+          <td><strong>PAN Number</strong></td>
+          <td>${fill(e.pan, "N/A")}</td>
+        </tr>
+        <tr>
+          <td><strong>Mobile / Alt Mobile</strong></td>
+          <td>${fill(e.mobile)} / ${fill(e.altmobile, "—")}</td>
+          <td><strong>Personal Email ID</strong></td>
+          <td>${fill(e.email)}</td>
+        </tr>
+        <tr>
+          <td><strong>Current Address</strong></td>
+          <td colspan="3">${fill(e.curaddr)}</td>
+        </tr>
+        <tr>
+          <td><strong>Permanent Address</strong></td>
+          <td colspan="3">${fill(e.permaddr)}</td>
+        </tr>
+        <tr>
+          <td><strong>Bank Name / A/C</strong></td>
+          <td>${fill(e.bank)} / ${fill(e.bankAcc)}</td>
+          <td><strong>IFSC Code / UPI</strong></td>
+          <td>${fill(e.bankIfsc)} / ${fill(e.upi, "—")}</td>
+        </tr>
+      </table>
+
+      <div class="doc-sec-title">2. DOCUMENT SUBMISSION CHECKLIST</div>
+      <table class="doc-tbl">
+        <tr>
+          <th>Document</th>
+          <th>Status</th>
+          <th>Document</th>
+          <th>Status</th>
+        </tr>
+        <tr>
+          <td>Aadhaar Card Copy*</td>
+          <td><strong>${d.aadhaar || e.aadhaar ? "Submitted" : "Pending"}</strong></td>
+          <td>Passport Size Photograph*</td>
+          <td><strong>${d.photo ? "Submitted" : "Pending"}</strong></td>
+        </tr>
+        <tr>
+          <td>Bank Proof / Cheque*</td>
+          <td><strong>${d.bank || e.bankAcc ? "Submitted" : "Pending"}</strong></td>
+          <td>Educational Certificates*</td>
+          <td><strong>${d.edu || e.egradInst ? "Submitted" : "Pending"}</strong></td>
+        </tr>
+        <tr>
+          <td>PAN Card Copy</td>
+          <td><strong>${d.pan || e.pan ? "Submitted" : "N/A"}</strong></td>
+          <td>Resume / CV</td>
+          <td><strong>${d.resume ? "Submitted" : "N/A"}</strong></td>
+        </tr>
+      </table>
+
+      <div class="doc-sec-title">3. CONFIDENTIALITY, COMPLIANCE &amp; DECLARATION</div>
+      <p class="doc-p">
+        I hereby acknowledge, understand, and agree that during my employment with Kuber Alpha Research, I shall strictly adhere to all company policies, SEBI regulations, ethical standards, and professional conduct requirements.
+        I shall not make any guaranteed return promise, assured profit claims, or share fabricated profit screenshots. Violation may result in immediate termination and legal action.
+      </p>
+
+      ${getEmployeeSignatureBlock(e, "Employee Signature")}
+    </div>
+  `;
+}
+
+/* 7. Code of Conduct Policy */
+function generateCodeConductHTML(e) {
+  return `
+    <div class="doc-paper" id="paper_codeConduct">
+      ${getLetterheadHTML()}
+      <div class="doc-title">EMPLOYEE CODE OF CONDUCT &amp; WORKPLACE ETHICS POLICY</div>
+
+      <div class="doc-sec-title">1. PREAMBLE &amp; APPLICABILITY</div>
+      <p class="doc-p">
+        Kuber Alpha Research (“Company”), being a SEBI Registered Research Analyst (Reg. No.: INH000013642), is committed to maintaining the highest standards of professionalism, integrity, workplace discipline, ethical conduct, transparency, and regulatory compliance.
+        This Policy applies to all Employees, Associates, Interns, and Associated Persons.
+      </p>
+
+      <div class="doc-sec-title">2. WORKPLACE ETHICS &amp; CLIENT INTERACTION</div>
+      <p class="doc-p">
+        Employees shall maintain honesty, integrity, and ethical behaviour at all times; perform assigned duties diligently; conduct themselves respectfully with clients, colleagues, and vendors; follow lawful instructions; and comply with all confidentiality and regulatory obligations.
+      </p>
+
+      <div class="doc-sec-title">3. SOCIAL MEDIA, DISCIPLINE &amp; ATTENDANCE</div>
+      <p class="doc-p">
+        Employees shall not publish offensive or defamatory content relating to the Company on WhatsApp, Telegram, Instagram, Facebook, LinkedIn, YouTube, or Twitter/X. Employees are expected to maintain punctuality and attendance, adhere to office timings, and follow workplace decorum.
+      </p>
+
+      <div class="doc-sec-title">4. ACKNOWLEDGEMENT &amp; DECLARATION</div>
+      <p class="doc-p">
+        I hereby acknowledge and confirm that I have carefully read and understood this Employee Code of Conduct, Workplace Ethics &amp; Professional Standards Policy. I agree to strictly comply with all provisions.
+      </p>
+
+      <table class="doc-tbl" style="margin-top:14px">
+        <tr>
+          <td style="width:30%"><strong>Employee Name:</strong></td>
+          <td style="width:70%">${fill(e.name)}</td>
+        </tr>
+        <tr>
+          <td><strong>Designation:</strong></td>
+          <td>${fill(e.position)}</td>
+        </tr>
+      </table>
+
+      ${getEmployeeSignatureBlock(e, "Employee Acknowledgement Signature")}
+    </div>
+  `;
+}
+
+/* 8. NDA Agreement */
+function generateNDAHTML(e) {
+  const d = new Date();
+  const day = d.getDate();
+  const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+  const monthName = months[d.getMonth()];
+  const year = d.getFullYear();
+
+  return `
+    <div class="doc-paper" id="paper_nda">
+      ${getLetterheadHTML()}
+      <div class="doc-title">NON-DISCLOSURE, CONFIDENTIALITY &amp; SEBI COMPLIANCE AGREEMENT</div>
+
+      <p class="doc-p" style="margin-top:14px;">
+        This Non-Disclosure &amp; Compliance Agreement is executed on this 
+        <strong>${fill(day)}</strong> day of <strong>${fill(monthName)}</strong>, <strong>${fill(year)}</strong>, at Indore, Madhya Pradesh.
+      </p>
+
+      <div style="margin: 10px 0; font-size:12px; background:#F9FAFB; padding:10px; border:1px solid #E5E7EB; border-radius:4px;">
+        <strong>BETWEEN:</strong><br>
+        <strong>${esc(COMPANY.proprietor)}</strong>, SEBI Registered Research Analyst (Registration No.: ${esc(COMPANY.sebiReg)}), having its office at ${esc(COMPANY.address)} (hereinafter referred to as the “Company”)
+        <div style="margin:6px 0; font-weight:700">AND</div>
+        <strong>Mr./Ms. ${fill(e.name)}</strong>, residing at ${fill(e.curaddr)} (hereinafter referred to as the “Employee”).
+      </div>
+
+      <div class="doc-sec-title">1. CONFIDENTIAL INFORMATION &amp; OBLIGATIONS</div>
+      <p class="doc-p">
+        “Confidential Information” includes all client names, trading research, systems, login credentials, and data. The Employee undertakes to maintain complete secrecy and never copy, leak, or transmit company databases or records.
+      </p>
+
+      <div class="doc-sec-title">2. SEBI COMPLIANCE &amp; NON-SOLICITATION</div>
+      <p class="doc-p">
+        The Employee shall strictly adhere to SEBI Research Analyst regulations and shall not make false return promises or unauthorized calls.
+        For a period of <strong>24 months</strong> following cessation of employment, the Employee shall not solicit Company clients or personnel.
+      </p>
+
+      <div class="doc-sec-title">3. GOVERNING LAW &amp; ACCEPTANCE</div>
+      <p class="doc-p">
+        This Agreement is governed by the laws of India, subject to the exclusive jurisdiction of the competent courts at <strong>Indore, Madhya Pradesh</strong>.
+      </p>
+
+      ${getEmployeeSignatureBlock(e, "Employee Signature")}
+    </div>
+  `;
+}
+
+/* 9. Probation Period Appointment Letter */
+function generateProbationHTML(e) {
+  return `
+    <div class="doc-paper" id="paper_probation">
+      ${getLetterheadHTML()}
+      <div class="doc-title">PROBATION PERIOD APPOINTMENT LETTER</div>
+
+      <div style="display:flex; justify-content:space-between; margin-bottom:12px; font-size:12px;">
+        <div><strong>Date:</strong> ${fill(fmtDate(e.doj) || todayStr())}</div>
+        <div><strong>Reference:</strong> KAR/PROB/${fill(e.empid, (e.mobile ? e.mobile.slice(-4) : "2026"))}</div>
+      </div>
+
+      <div style="font-size:12px; margin-bottom:14px;">
+        To,<br>
+        <strong>Mr./Ms. ${fill(e.name)}</strong><br>
+        Address: ${fill(e.curaddr)}<br>
+        Mobile: ${fill(e.mobile)}
+      </div>
+
+      <p class="doc-p">
+        Dear <strong>Mr./Ms. ${fill(e.name)}</strong>,
+      </p>
+      <p class="doc-p">
+        We are pleased to appoint you as <strong>${fill(e.position)}</strong> with <strong>Kuber Alpha Research by Aakash Rathore</strong>, SEBI Registered Research Analyst (Registration No.: INH000013642), subject to the terms and conditions outlined below.
+        Your appointment shall initially be on a Probation Period basis effective from <strong>${fill(fmtDate(e.doj) || todayStr())}</strong>.
+      </p>
+
+      <div class="doc-sec-title">1. POSITION &amp; PROBATION TERMS</div>
+      <table class="doc-tbl">
+        <tr>
+          <td style="width:30%"><strong>Designation</strong></td>
+          <td style="width:70%">${fill(e.position)}</td>
+        </tr>
+        <tr>
+          <td><strong>Department</strong></td>
+          <td>${fill(e.dept, "Operations")}</td>
+        </tr>
+        <tr>
+          <td><strong>Probation Period</strong></td>
+          <td>${fill(e.probation ? e.probation + " Month(s)" : "1 Month")}</td>
+        </tr>
+        <tr>
+          <td><strong>Monthly Salary</strong></td>
+          <td><strong>₹ ${fill(e.salary, "20000")}</strong></td>
+        </tr>
+      </table>
+
+      <p class="doc-p">
+        Please sign below as acceptance of the terms and conditions mentioned in this letter.
+      </p>
+
+      ${getEmployeeSignatureBlock(e, "Employee Acceptance Signature")}
+    </div>
+  `;
+}
+
+/* 10. Legal & Criminal Background Declaration */
+function generateSelfDeclHTML(e) {
+  const isClean = !e.convicted || e.convicted === "No";
+  return `
+    <div class="doc-paper" id="paper_selfDecl">
+      ${getLetterheadHTML()}
+      <div class="doc-title">LEGAL, CRIMINAL &amp; REGULATORY BACKGROUND DECLARATION</div>
+
+      <div style="text-align:right; font-size:12px; margin-bottom:10px;">
+        <strong>Date:</strong> ${fill(fmtDate(e.doj) || todayStr())}
+      </div>
+
+      <div class="doc-sec-title">EMPLOYEE INFORMATION</div>
+      <table class="doc-tbl">
+        <tr>
+          <td style="width:25%"><strong>Full Name</strong></td>
+          <td style="width:25%">${fill(e.name)}</td>
+          <td style="width:25%"><strong>Designation</strong></td>
+          <td style="width:25%">${fill(e.position)}</td>
+        </tr>
+        <tr>
+          <td><strong>Aadhaar Number</strong></td>
+          <td>${fill(e.aadhaar)}</td>
+          <td><strong>PAN Number</strong></td>
+          <td>${fill(e.pan, "N/A")}</td>
+        </tr>
+        <tr>
+          <td><strong>Current Address</strong></td>
+          <td colspan="3">${fill(e.curaddr)}</td>
+        </tr>
+        <tr>
+          <td><strong>Permanent Address</strong></td>
+          <td colspan="3">${fill(e.permaddr)}</td>
+        </tr>
+      </table>
+
+      <div class="doc-sec-title">DECLARATION OF PROCEEDINGS</div>
+      <p class="doc-p">
+        I, <strong>Mr./Ms. ${fill(e.name)}</strong>, solemnly affirm that <strong>${isClean ? "No criminal, civil, regulatory case or investigation is pending against me" : "The disclosed proceeding details are true"}</strong>.
+        I authorize Kuber Alpha Research to conduct background and police verification.
+      </p>
+
+      ${getEmployeeSignatureBlock(e, "Employee Acknowledgement Signature")}
+    </div>
+  `;
+}
+
+function renderAllDocuments() {
+  const container = $("docPrintContainer");
+  if (!container) return;
+  const e = currentEmp || createEmptyEmp();
+
+  container.innerHTML = `
+    ${generateOfferHRHTML(e)}
+    ${generateOfferSalesHTML(e)}
+    ${generateOfferPercentHTML(e)}
+    ${generatePoliceVerifHTML(e)}
+    ${generateAppFormHTML(e)}
+    ${generateJoinDeclHTML(e)}
+    ${generateCodeConductHTML(e)}
+    ${generateNDAHTML(e)}
+    ${generateProbationHTML(e)}
+    ${generateSelfDeclHTML(e)}
+  `;
+
+  applyDocFilter();
+}
+
+function applyDocFilter() {
+  const val = $("docSelector").value;
+  const map = {
+    all: null,
+    offerHR: "paper_offerHR",
+    offerSales: "paper_offerSales",
+    offerPercent: "paper_offerPercent",
+    policeVerif: "paper_policeVerif",
+    appForm: "paper_appForm",
+    joinDecl: "paper_joinDecl",
+    codeConduct: "paper_codeConduct",
+    nda: "paper_nda",
+    probation: "paper_probation",
+    selfDecl: "paper_selfDecl"
+  };
+
+  const papers = document.querySelectorAll(".doc-paper");
+  papers.forEach(p => {
+    if (val === "all") {
+      p.style.display = "block";
+    } else {
+      p.style.display = (p.id === map[val]) ? "block" : "none";
+    }
+  });
+}
+
+$("docSelector").addEventListener("change", applyDocFilter);
+
+$("chkHighlight").addEventListener("change", function(e) {
+  if (e.target.checked) document.body.classList.remove("no-highlights");
+  else document.body.classList.add("no-highlights");
+});
+
+/* PRINT & DOWNLOAD ACTIONS */
+$("btnPrintCurrent").onclick = function() { window.print(); };
+$("btnPrintAll").onclick = function() {
+  $("docSelector").value = "all";
+  applyDocFilter();
+  window.print();
+};
+$("btnPrintAllNav").onclick = function() {
+  switchTab("docs");
+  $("docSelector").value = "all";
+  applyDocFilter();
+  setTimeout(() => window.print(), 200);
+};
+
+// DOWNLOAD FUNCTIONALITY
+function downloadCurrentAsHTML(docVal, isAll) {
+  const empName = (currentEmp && currentEmp.name) ? currentEmp.name.replace(/\s+/g, "_") : "Employee";
+  const filename = isAll ? `Kuber_Alpha_Complete_Kit_${empName}` : `Kuber_Alpha_${docVal}_${empName}`;
+  
+  let targetHTML = "";
+  if (isAll) {
+    targetHTML = $("docPrintContainer").innerHTML;
+  } else {
+    const map = {
+      offerHR: "paper_offerHR", offerSales: "paper_offerSales", offerPercent: "paper_offerPercent",
+      policeVerif: "paper_policeVerif", appForm: "paper_appForm", joinDecl: "paper_joinDecl",
+      codeConduct: "paper_codeConduct", nda: "paper_nda", probation: "paper_probation", selfDecl: "paper_selfDecl"
+    };
+    const targetEl = $(map[docVal]);
+    if (!targetEl) targetHTML = $("docPrintContainer").innerHTML;
+    else targetHTML = targetEl.outerHTML;
+  }
+
+  const fullHTML = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>${filename}</title>
+<style>
+  body { font-family: "Segoe UI", Arial, sans-serif; margin: 20px; color: #111; background: #fff; }
+  ${document.querySelector("style").innerHTML}
+  .no-print { display: none !important; }
+  .doc-paper { border: none !important; box-shadow: none !important; padding: 20px !important; margin-bottom: 30px; page-break-after: always; }
+  mark.autofill { background: transparent !important; border: none !important; font-weight: bold; }
+</style>
+</head>
+<body>
+  ${targetHTML}
+  <script>
+    window.onload = function() {
+      // Auto open print dialog if user opens in browser
+      // window.print();
+    };
+  <\/script>
+</body>
+</html>`;
+
+  const blob = new Blob([fullHTML], { type: "text/html" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = filename + ".html";
+  a.click();
+}
+
+$("btnDownloadCurrent").onclick = function() {
+  const val = $("docSelector").value;
+  downloadCurrentAsHTML(val, val === "all");
+};
+$("btnDownloadAll").onclick = function() {
+  downloadCurrentAsHTML("all", true);
+};
+$("btnDownloadAllNav").onclick = function() {
+  downloadCurrentAsHTML("all", true);
+};
+
+/* --------------------------------------------------------------------------
+   CANVAS SIGNATURE & IMAGE UPLOAD
+   -------------------------------------------------------------------------- */
+const canvas = $("signCanvas");
+const ctx = canvas ? canvas.getContext("2d") : null;
+let isDrawing = false;
+let lastX = 0, lastY = 0;
+
+if (canvas && ctx) {
+  ctx.lineWidth = 2.5;
+  ctx.lineCap = "round";
+  ctx.strokeStyle = "#000000";
+
+  function getPos(e) {
+    const rect = canvas.getBoundingClientRect();
+    if (e.touches && e.touches[0]) {
+      return {
+        x: (e.touches[0].clientX - rect.left) * (canvas.width / rect.width),
+        y: (e.touches[0].clientY - rect.top) * (canvas.height / rect.height)
+      };
+    }
+    return {
+      x: (e.clientX - rect.left) * (canvas.width / rect.width),
+      y: (e.clientY - rect.top) * (canvas.height / rect.height)
+    };
+  }
+
+  function startDraw(e) {
+    isDrawing = true;
+    const pos = getPos(e);
+    lastX = pos.x; lastY = pos.y;
+    e.preventDefault();
+  }
+  function moveDraw(e) {
+    if (!isDrawing) return;
+    const pos = getPos(e);
+    ctx.beginPath();
+    ctx.moveTo(lastX, lastY);
+    ctx.lineTo(pos.x, pos.y);
+    ctx.stroke();
+    lastX = pos.x; lastY = pos.y;
+    e.preventDefault();
+  }
+  function stopDraw() { isDrawing = false; }
+
+  canvas.addEventListener("mousedown", startDraw);
+  canvas.addEventListener("mousemove", moveDraw);
+  window.addEventListener("mouseup", stopDraw);
+
+  canvas.addEventListener("touchstart", startDraw, { passive: false });
+  canvas.addEventListener("touchmove", moveDraw, { passive: false });
+  window.addEventListener("touchend", stopDraw);
+}
+
+$("btnClearSign").onclick = function() {
+  if (ctx) ctx.clearRect(0, 0, canvas.width, canvas.height);
+};
+
+$("btnApplyCanvasSign").onclick = function() {
+  if (!canvas) return;
+  const dataUrl = canvas.toDataURL("image/png");
+  setCandidateSignature(dataUrl);
+};
+
+$("btnApplyTypedSign").onclick = function() {
+  const name = ($("typedSignName").value.trim() || (currentEmp && currentEmp.name) || "Candidate");
+  const off = document.createElement("canvas");
+  off.width = 400; off.height = 100;
+  const octx = off.getContext("2d");
+  octx.font = "italic 36px 'Brush Script MT', cursive, sans-serif";
+  octx.fillStyle = "#0F172A";
+  octx.textAlign = "center";
+  octx.textBaseline = "middle";
+  octx.fillText(name, 200, 50);
+  setCandidateSignature(off.toDataURL("image/png"));
+};
+
+$("uploadSignFile").onchange = function(ev) {
+  const file = ev.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    setCandidateSignature(e.target.result);
+  };
+  reader.readAsDataURL(file);
+};
+
+function setCandidateSignature(dataUrl) {
+  if (!currentEmp) currentEmp = createEmptyEmp();
+  currentEmp.signatureDataUrl = dataUrl;
+  persistCurrentEmp();
+  renderActiveSignaturePreview(dataUrl);
+  renderAllDocuments();
+  showMsg("saveMsg", "✓ Candidate signature updated on all documents!", "ok");
+}
+
+$("btnRemoveSign").onclick = function() {
+  if (currentEmp) currentEmp.signatureDataUrl = null;
+  persistCurrentEmp();
+  renderActiveSignaturePreview(null);
+  renderAllDocuments();
+};
+
+function renderActiveSignaturePreview(dataUrl) {
+  const preview = $("activeSignPreview");
+  const removeBtn = $("btnRemoveSign");
+  if (!preview) return;
+  if (dataUrl) {
+    preview.innerHTML = `<img src="${dataUrl}" style="max-height:50px; border:1px solid #E2E8F0; padding:2px; background:#fff">`;
+    if (removeBtn) removeBtn.style.display = "inline-flex";
+  } else {
+    preview.innerHTML = `<span style="color:var(--mut); font-size:12px; font-style:italic">No digital signature saved yet (Will print blank line for physical pen signature).</span>`;
+    if (removeBtn) removeBtn.style.display = "none";
+  }
+}
+
+$("btnSignAndReview").onclick = function() { switchTab("docs"); };
+
+/* --------------------------------------------------------------------------
+   VIDEO STATEMENT
+   -------------------------------------------------------------------------- */
+function updateVideoScript() {
+  const name = (currentEmp && currentEmp.name) || "Rahul Sharma";
+  const pos = (currentEmp && currentEmp.position) || "Senior Research Analyst";
+  const sal = (currentEmp && currentEmp.salary) || "35,000";
+  if ($("v_name_disp")) $("v_name_disp").textContent = name;
+  if ($("v_pos_disp")) $("v_pos_disp").textContent = pos;
+  if ($("v_sal_disp")) $("v_sal_disp").textContent = sal;
+  if ($("v_name_disp_hi")) $("v_name_disp_hi").textContent = name;
+  if ($("v_pos_disp_hi")) $("v_pos_disp_hi").textContent = pos;
+  if ($("v_sal_disp_hi")) $("v_sal_disp_hi").textContent = sal;
+}
+
+let mediaRecorder, recordedChunks = [], stream;
+
+$("v_start").onclick = async function() {
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+    $("v_preview").srcObject = stream;
+    recordedChunks = [];
+    mediaRecorder = new MediaRecorder(stream);
+    mediaRecorder.ondataavailable = function(e) { if (e.data.size > 0) recordedChunks.push(e.data); };
+    mediaRecorder.onstop = function() {
+      const blob = new Blob(recordedChunks, { type: "video/webm" });
+      window._recordedVideoBlob = blob;
+      $("v_preview").srcObject = null;
+      $("v_preview").src = URL.createObjectURL(blob);
+      $("v_preview").muted = false;
+      $("v_save").disabled = false;
+      $("v_retake").style.display = "inline-flex";
+      stream.getTracks().forEach(t => t.stop());
+    };
+    mediaRecorder.start();
+    $("v_start").disabled = true;
+    $("v_stop").disabled = false;
+    showMsg("v_msg", "Recording started... Speak the script above clearly.", "ok");
+  } catch(e) {
+    showMsg("v_msg", "Camera access error: " + (e.message || e), "err");
+  }
+};
+
+$("v_stop").onclick = function() {
+  if (mediaRecorder && mediaRecorder.state === "recording") mediaRecorder.stop();
+  $("v_start").disabled = false;
+  $("v_stop").disabled = true;
+};
+
+$("v_retake").onclick = function() {
+  window._recordedVideoBlob = null;
+  $("v_preview").src = "";
+  $("v_save").disabled = true;
+  $("v_retake").style.display = "none";
+  $("v_start").click();
+};
+
+$("v_upload").onchange = function(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  window._recordedVideoBlob = file;
+  $("v_preview").src = URL.createObjectURL(file);
+  $("v_preview").muted = false;
+  $("v_save").disabled = false;
+};
+
+$("v_save").onclick = function() {
+  if (!window._recordedVideoBlob) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    if (!currentEmp) currentEmp = createEmptyEmp();
+    currentEmp.videoUrl = e.target.result;
+    persistCurrentEmp();
+    showMsg("v_msg", "✓ Video statement saved successfully!", "ok");
+    updateStatusChips();
+  };
+  reader.readAsDataURL(window._recordedVideoBlob);
+};
+
+/* --------------------------------------------------------------------------
+   HR DASHBOARD: ACTIVE & EX-EMPLOYEES + F&F SETTLEMENT
+   -------------------------------------------------------------------------- */
+let activeHRSubTab = "active";
+
+function switchHRSubTab(tab) {
+  activeHRSubTab = tab;
+  $("tabBtnActiveEmps").className = (tab === "active") ? "btn sm" : "btn sm g";
+  $("tabBtnActiveEmps").style.background = (tab === "active") ? "var(--ac)" : "transparent";
+  $("tabBtnActiveEmps").style.color = (tab === "active") ? "#fff" : "var(--ink)";
+
+  $("tabBtnExEmps").className = (tab === "ex") ? "btn sm" : "btn sm g";
+  $("tabBtnExEmps").style.background = (tab === "ex") ? "#DC2626" : "transparent";
+  $("tabBtnExEmps").style.color = (tab === "ex") ? "#fff" : "var(--ink)";
+
+  $("viewActiveEmps").style.display = (tab === "active") ? "block" : "none";
+  $("viewExEmps").style.display = (tab === "ex") ? "block" : "none";
+  renderHRTables();
+}
+
+function calcTenure(startIso, endIso) {
+  if (!startIso || !endIso) return "—";
+  const s = new Date(startIso);
+  const e = new Date(endIso);
+  if (isNaN(s) || isNaN(e) || e < s) return "—";
+  const diffTime = Math.abs(e - s);
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  const months = Math.floor(diffDays / 30);
+  const days = diffDays % 30;
+  if (months > 0) return `${months} Months ${days} Days`;
+  return `${diffDays} Days`;
+}
+
+function renderHRTables() {
+  const db = getDB();
+  const all = Object.values(db.employees || {});
+  const activeList = all.filter(e => e.status !== "ex");
+  const exList = all.filter(e => e.status === "ex");
+
+  if ($("cntActive")) $("cntActive").textContent = activeList.length;
+  if ($("cntEx")) $("cntEx").textContent = exList.length;
+
+  // Active table
+  const tbodyA = $("tbodyActiveEmps");
+  if (tbodyA) {
+    if (activeList.length === 0) {
+      tbodyA.innerHTML = `<tr><td colspan="7" style="text-align:center; color:var(--mut); padding:16px;">No active employees saved.</td></tr>`;
+    } else {
+      tbodyA.innerHTML = activeList.map(e => {
+        const isCur = currentEmp && currentEmp.id === e.id;
+        return `
+          <tr style="${isCur ? 'background:#EFF6FF;' : ''}">
+            <td><strong>${esc(e.name || "Untitled")}</strong> ${isCur ? '<span class="tag t-ok">Active Profile</span>' : ''}</td>
+            <td>${esc(e.position || "—")}</td>
+            <td>${esc(e.mobile || "—")}</td>
+            <td>${fmtDate(e.doj) || "—"}</td>
+            <td>₹${esc(e.salary || "—")}</td>
+            <td><span class="tag t-ok">🟢 Active</span></td>
+            <td>
+              <button class="btn sm g" onclick="selectEmp('${e.id}')">Load / Edit</button>
+              <button class="btn sm green" onclick="printEmpKit('${e.id}')">🖨️ Print</button>
+              <button class="btn sm r" onclick="openFFModal('${e.id}')">Process F&amp;F Exit</button>
+            </td>
+          </tr>
+        `;
+      }).join("");
+    }
+  }
+
+  // Ex-Employees table
+  const tbodyE = $("tbodyExEmps");
+  if (tbodyE) {
+    if (exList.length === 0) {
+      tbodyE.innerHTML = `<tr><td colspan="9" style="text-align:center; color:var(--mut); padding:16px;">No ex-employee / separation records yet.</td></tr>`;
+    } else {
+      tbodyE.innerHTML = exList.map(e => {
+        const tenure = calcTenure(e.doj, e.exitDate);
+        return `
+          <tr>
+            <td><strong>${esc(e.name || "Untitled")}</strong></td>
+            <td>${esc(e.position || "—")}</td>
+            <td>${fmtDate(e.doj) || "—"}</td>
+            <td>${fmtDate(e.exitDate) || "—"}</td>
+            <td><strong>${tenure}</strong></td>
+            <td>${esc(e.noticePeriodServed || "—")}</td>
+            <td>${fmtDate(e.settlementDate) || "—"}</td>
+            <td><strong style="color:var(--g)">₹ ${esc(e.settlementAmountPaid || "0")}</strong></td>
+            <td>
+              <button class="btn sm g" onclick="reactivateEmp('${e.id}')">Re-activate</button>
+              <button class="btn sm r" onclick="deleteEmp('${e.id}')">🗑️</button>
+            </td>
+          </tr>
+        `;
+      }).join("");
+    }
+  }
+}
+
+// Full & Final Modal Handlers
+let selectedFFEmpId = null;
+
+window.openFFModal = function(id) {
+  const db = getDB();
+  const emp = db.employees[id];
+  if (!emp) return;
+  selectedFFEmpId = id;
+  $("ff_emp_name").textContent = emp.name;
+  $("ff_emp_id").textContent = emp.empid || emp.id;
+  $("ff_emp_doj").textContent = fmtDate(emp.doj);
+  $("ff_exit_date").value = todayISO();
+  $("ff_settle_date").value = todayISO();
+  $("ff_amount_paid").value = emp.salary || "";
+  $("ff_remarks").value = "";
+  $("modalFF").style.display = "flex";
+};
+
+window.closeFFModal = function() {
+  $("modalFF").style.display = "none";
+  selectedFFEmpId = null;
+};
+
+$("btnSubmitFF").onclick = function() {
+  if (!selectedFFEmpId) return;
+  const db = getDB();
+  const emp = db.employees[selectedFFEmpId];
+  if (!emp) return;
+
+  emp.status = "ex";
+  emp.exitDate = $("ff_exit_date").value;
+  emp.exitReason = $("ff_reason").value;
+  emp.noticePeriodServed = $("ff_notice_served").value;
+  emp.settlementDate = $("ff_settle_date").value;
+  emp.settlementAmountPaid = $("ff_amount_paid").value;
+  emp.clearanceStatus = $("ff_clearance").value;
+  emp.settlementRemarks = $("ff_remarks").value;
+  emp.updatedAt = new Date().toISOString();
+
+  saveDB(db);
+  closeFFModal();
+  renderHRTables();
+  switchHRSubTab("ex");
+  alert(`✓ Full & Final settlement recorded for ${emp.name}! Record moved to Ex-Employees.`);
+};
+
+window.reactivateEmp = function(id) {
+  if (!confirm("Re-activate this employee back to Active status?")) return;
+  const db = getDB();
+  if (db.employees[id]) {
+    db.employees[id].status = "active";
+    saveDB(db);
+    renderHRTables();
+    switchHRSubTab("active");
+  }
+};
+
+window.selectEmp = function(id) {
+  const db = getDB();
+  if (db.employees[id]) {
+    currentEmp = db.employees[id];
+    setCurrentEmpId(id);
+    populateFormFields(currentEmp);
+    renderAllDocuments();
+    updateStatusChips();
+    switchTab("join");
+    showMsg("saveMsg", `Loaded candidate profile: ${currentEmp.name}`, "ok");
+  }
+};
+
+window.printEmpKit = function(id) {
+  selectEmp(id);
+  switchTab("docs");
+  $("docSelector").value = "all";
+  applyDocFilter();
+  setTimeout(() => window.print(), 250);
+};
+
+window.deleteEmp = function(id) {
+  if (!confirm("Are you sure you want to delete this record permanently?")) return;
+  const db = getDB();
+  delete db.employees[id];
+  saveDB(db);
+  if (currentEmp && currentEmp.id === id) {
+    currentEmp = createEmptyEmp();
+    setCurrentEmpId(null);
+    populateFormFields(currentEmp);
+    renderAllDocuments();
+  }
+  renderHRTables();
+  updateStatusChips();
+};
+
+/* --------------------------------------------------------------------------
+   EXCEL & JSON BACKUP EXPORT
+   -------------------------------------------------------------------------- */
+$("btnExportExcel").onclick = function() {
+  const db = getDB();
+  const list = Object.values(db.employees || {});
+  if (list.length === 0) {
+    alert("No employee records to export.");
+    return;
+  }
+
+  const headers = [
+    "Employee ID", "Full Name", "Status", "Designation", "Department",
+    "Mobile", "Email", "Aadhaar Number", "PAN Number",
+    "Date of Joining", "Monthly Salary", "Offer Type",
+    "Separation Date", "Tenure Worked", "Notice Period Served",
+    "F&F Settlement Date", "F&F Amount Paid", "F&F Remarks",
+    "Bank Name", "Bank Account", "IFSC Code",
+    "Emergency Contact", "Emergency Relation", "Emergency Mobile", "Current Address"
+  ];
+
+  const rows = list.map(e => {
+    const tenure = (e.status === "ex") ? calcTenure(e.doj, e.exitDate) : "Currently Active";
+    return [
+      `"${e.empid || e.id}"`,
+      `"${e.name || ""}"`,
+      `"${e.status === "ex" ? "Ex-Employee" : "Active"}"`,
+      `"${e.position || ""}"`,
+      `"${e.dept || ""}"`,
+      `"${e.mobile || ""}"`,
+      `"${e.email || ""}"`,
+      `"${e.aadhaar || ""}"`,
+      `"${e.pan || ""}"`,
+      `"${e.doj || ""}"`,
+      `"${e.salary || ""}"`,
+      `"${e.olType || ""}"`,
+      `"${e.exitDate || ""}"`,
+      `"${tenure}"`,
+      `"${e.noticePeriodServed || ""}"`,
+      `"${e.settlementDate || ""}"`,
+      `"${e.settlementAmountPaid || ""}"`,
+      `"${(e.settlementRemarks || "").replace(/"/g, '""')}"`,
+      `"${e.bank || ""}"`,
+      `"${e.bankAcc || ""}"`,
+      `"${e.bankIfsc || ""}"`,
+      `"${e.emName || ""}"`,
+      `"${e.emRel || ""}"`,
+      `"${e.emMobile || ""}"`,
+      `"${(e.curaddr || "").replace(/"/g, '""')}"`
+    ].join(",");
+  });
+
+  const csvContent = "\uFEFF" + headers.join(",") + "\n" + rows.join("\n");
+  const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = `Kuber_Alpha_Employees_Records_${Date.now()}.csv`;
+  a.click();
+};
+
+$("btnExportJSON").onclick = function() {
+  const db = getDB();
+  const blob = new Blob([JSON.stringify(db, null, 2)], { type: "application/json" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = `kuber_alpha_onboarding_backup_${Date.now()}.json`;
+  a.click();
+};
+
+$("importJSONFile").onchange = function(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(ev) {
+    try {
+      const imported = JSON.parse(ev.target.result);
+      if (imported && imported.employees) {
+        saveDB(imported);
+        loadCurrentEmp();
+        renderHRTables();
+        alert("Backup imported successfully!");
+      } else {
+        alert("Invalid file format.");
+      }
+    } catch(err) {
+      alert("Error reading file: " + err.message);
+    }
+  };
+  reader.readAsText(file);
+};
+
+/* --------------------------------------------------------------------------
+   HR PIN AUTHENTICATION & CANDIDATE MODE
+   -------------------------------------------------------------------------- */
+function handleAdminLoginClick() {
+  if (isHRUnlocked) {
+    switchTab("hr");
+  } else {
+    // Open PIN Modal with default 1234 ready
+    $("inputHRPin").value = "1234";
+    $("pinErrorMsg").textContent = "";
+    $("modalPin").style.display = "flex";
+    setTimeout(() => $("inputHRPin").focus(), 100);
+  }
+}
+
+function closePinModal() {
+  $("modalPin").style.display = "none";
+}
+
+function verifyHRPin() {
+  const entered = $("inputHRPin").value.trim();
+  const correct = getHRPin();
+  // Allow configured PIN or default "1234"
+  if (entered === correct || entered === "1234") {
+    isHRUnlocked = true;
+    closePinModal();
+    if ($("tabNavHR")) {
+      $("tabNavHR").style.display = "inline-flex";
+      $("tabNavHR").innerHTML = "👥 5. HR Dashboard &amp; Records 🔓";
+    }
+    if ($("btnAdminLogin")) {
+      $("btnAdminLogin").innerHTML = "👥 HR Dashboard (Active)";
+      $("btnAdminLogin").style.background = "#16A34A";
+    }
+    switchTab("hr");
+  } else {
+    $("pinErrorMsg").textContent = "Incorrect PIN. Default PIN is 1234.";
+  }
+}
+
+function updateHRPin() {
+  const newPin = $("inputNewHRPin").value.trim();
+  const confirmPin = $("inputConfirmHRPin").value.trim();
+  const msgEl = $("pinChangeMsg");
+
+  if (!newPin || newPin.length < 4) {
+    msgEl.innerHTML = `<span style="color:#DC2626; font-weight:600;">⚠️ PIN must contain at least 4 digits.</span>`;
+    return;
+  }
+  if (newPin !== confirmPin) {
+    msgEl.innerHTML = `<span style="color:#DC2626; font-weight:600;">⚠️ New PIN and Confirm PIN do not match.</span>`;
+    return;
+  }
+  localStorage.setItem(HR_PIN_KEY, newPin);
+  $("inputNewHRPin").value = "";
+  $("inputConfirmHRPin").value = "";
+  msgEl.innerHTML = `<span style="color:#16A34A; font-weight:600;">✓ HR Admin PIN updated successfully! Next time use your new PIN to unlock.</span>`;
+}
+
+$("inputHRPin").addEventListener("keyup", function(e) {
+  if (e.key === "Enter") verifyHRPin();
+});
+
+/* --------------------------------------------------------------------------
+   CANDIDATE FINAL SUBMISSION WORKFLOW
+   -------------------------------------------------------------------------- */
+function triggerFinalSubmitModal() {
+  const updated = collectFormData();
+  if (!validateCandidateData(updated)) {
+    switchTab("join");
+    return;
+  }
+  currentEmp = updated;
+  persistCurrentEmp();
+
+  $("subSuccessName").textContent = currentEmp.name || "Candidate";
+  $("modalCandidateSuccess").style.display = "flex";
+}
+
+function printCandidateCopy() {
+  $("modalCandidateSuccess").style.display = "none";
+  switchTab("docs");
+  $("docSelector").value = "all";
+  applyDocFilter();
+  setTimeout(() => window.print(), 250);
+}
+
+function finishCandidateSubmit() {
+  $("modalCandidateSuccess").style.display = "none";
+  currentEmp = createEmptyEmp();
+  setCurrentEmpId(null);
+  populateFormFields(currentEmp);
+  renderAllDocuments();
+  switchTab("join");
+  showMsg("saveMsg", "Ready for next candidate entry.", "");
+}
+
+/* --------------------------------------------------------------------------
+   JOINING QR CODE GENERATOR & DESK SCANNER MODAL
+   -------------------------------------------------------------------------- */
+function openQRModal() {
+  const curURL = window.location.href.split('?')[0];
+  const candidateURL = curURL + (curURL.startsWith('http') ? '?mode=candidate' : '');
+  
+  $("qrLinkDisplay").textContent = candidateURL;
+  
+  // Use QR Code API for crystal-clear scan on phones
+  const qrApiURL = "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=" + encodeURIComponent(candidateURL);
+  $("qrImg").src = qrApiURL;
+  $("modalQR").style.display = "flex";
+}
+
+function closeQRModal() {
+  $("modalQR").style.display = "none";
+}
+
+function printQRCard() {
+  const curURL = $("qrLinkDisplay").textContent;
+  const qrImgSrc = $("qrImg").src;
+  const win = window.open("", "_blank");
+  win.document.write(`<!DOCTYPE html>
+<html>
+<head>
+<title>Kuber Alpha Research - Joining QR Standee</title>
+<style>
+  body { font-family: 'Segoe UI', Arial, sans-serif; text-align: center; padding: 40px; margin: 0; }
+  .standee { border: 3px solid #0D1B2A; border-radius: 12px; padding: 30px; max-width: 360px; margin: 0 auto; }
+  h2 { margin: 0; color: #0D1B2A; font-size: 20px; text-transform: uppercase; }
+  .sub { color: #B8860B; font-weight: bold; font-size: 11px; letter-spacing: 1px; margin: 4px 0 16px; }
+  .qr-box { background: #fff; padding: 10px; display: inline-block; border: 2px dashed #CBD5E1; border-radius: 8px; }
+  p { font-size: 13px; color: #334155; margin: 16px 0 6px; line-height: 1.5; font-weight: 600; }
+  small { color: #64748B; font-size: 11px; }
+</style>
+</head>
+<body>
+  <div class="standee">
+    <h2>KUBER ALPHA RESEARCH</h2>
+    <div class="sub">SEBI Registered Research Analyst • INH000013642</div>
+    <div class="qr-box">
+      <img src="${qrImgSrc}" width="240" height="240">
+    </div>
+    <p>📱 Scan QR Code to Fill Employee Joining &amp; Verification Form</p>
+    <small>Please scan with your mobile camera to complete your onboarding form.</small>
+  </div>
+  <script>window.onload = function() { window.print(); }<\/script>
+</body>
+</html>`);
+  win.document.close();
+}
+
+/* --------------------------------------------------------------------------
+   UI TAB SWITCHING & STATUS CHIPS
+   -------------------------------------------------------------------------- */
+function switchTab(targetTab) {
+  if (targetTab === "hr" && !isHRUnlocked) {
+    handleAdminLoginClick();
+    return;
+  }
+
+  document.querySelectorAll(".tabs-bar button").forEach(b => {
+    b.setAttribute("aria-selected", b.dataset.t === targetTab);
+  });
+  ["join", "docs", "sign", "video", "hr"].forEach(t => {
+    const section = $("p-" + t);
+    if (section) {
+      if (t === targetTab) {
+        section.hidden = false;
+        section.style.display = "block";
+      } else {
+        section.hidden = true;
+        section.style.display = "none";
+      }
+    }
+  });
+  if (targetTab === "docs") renderAllDocuments();
+  if (targetTab === "hr") renderHRTables();
+  if (targetTab === "video") updateVideoScript();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+document.querySelectorAll(".tabs-bar button").forEach(b => {
+  b.onclick = function() { switchTab(b.dataset.t); };
+});
+
+function updateStatusChips() {
+  const bar = $("statusBar");
+  if (!bar) return;
+  const e = currentEmp || {};
+  const isData = !!(e.name && e.mobile && e.email && e.aadhaar);
+  const docs = e.docs || {};
+  const isMandatoryDocs = !!(docs.aadhaar && docs.photo && docs.bank && docs.edu);
+  const isSign = !!e.signatureDataUrl;
+  const isVideo = !!e.videoUrl;
+
+  bar.innerHTML = `
+    <span class="step-chip ${isData ? 'done' : 'active'}">${isData ? '✓' : '○'} Details (Aadhaar ✓)</span>
+    <span class="step-chip ${isMandatoryDocs ? 'done' : ''}">${isMandatoryDocs ? '✓ Mandatory Docs (4/4)' : '○ Mandatory Docs'}</span>
+    <span class="step-chip done">✓ 3 Offer Letters + Police Form</span>
+    <span class="step-chip ${isSign ? 'done' : ''}">${isSign ? '✓ Digital Sign' : '○ Signature'}</span>
+    <span class="step-chip ${isVideo ? 'done' : ''}">${isVideo ? '✓ Video Statement' : '○ Video Statement'}</span>
+  `;
+}
+
+function showMsg(id, text, type) {
+  const el = $(id);
+  if (!el) return;
+  el.textContent = text;
+  el.className = "msg " + (type || "");
+}
+
+/* --------------------------------------------------------------------------
+   DEMO DATA GENERATOR & CLEAR NEW
+   -------------------------------------------------------------------------- */
+$("btnQuickDemo").onclick = function() {
+  const demo = {
+    id: "EMP_DEMO_" + Date.now(),
+    status: "active",
+    name: "Nikita Dhiman",
+    parent: "Ramesh Dhiman",
+    dob: "1997-08-14",
+    gender: "Female",
+    marital: "Single",
+    mobile: "9876543210",
+    altmobile: "9123456780",
+    email: "nikita.dhiman@example.com",
+    curaddr: "151/1 Somnath Ki junichal, Indore, Tilaknagar, Madhya Pradesh - 452018",
+    permaddr: "House No. 12, Main Road, Ujjain, Madhya Pradesh - 456001",
+    pan: "ABCPS1234F",
+    aadhaar: "1234 5678 9012",
+    dlpp: "MP09 2021 0012345",
+    uan: "101234567890",
+    convicted: "No",
+    convictedDetails: "",
+    position: "Senior Business Associate (Sales)",
+    dept: "Sales & Client Acquisition",
+    manager: "Aakash Rathore",
+    location: "Indore (M.P.)",
+    doj: "2026-10-20",
+    probation: "3",
+    salary: "35000",
+    empid: "KAR-2026-088",
+    olType: "sales",
+    olHrDesig: "Human Resource Executive", olHrSalary: "20000", olHrTarget: "5", olHrProb: "1",
+    olSalesDesig: "Senior Business Associate (Sales)", olSalesBasic: "33000", olSalesAtt: "1000", olSalesClient: "1000", olSalesTotal: "35000", olSalesTarget: "5,25,000 (+18% GST)", olSalesMinReg: "3", olSalesDeductPct: "30", olSalesBonus: "6000", olSalesOverachieve: "10",
+    olPctDesig: "Individual Business Associate (BA)", olPctCommission: "30", olPctTarget: "200000",
+    e10Inst: "CBSE Board, Indore Public School", e10Year: "2013", e10Pct: "84%",
+    e12Inst: "CBSE Board, Commerce", e12Year: "2015", e12Pct: "81%",
+    egradInst: "B.Com — DAVV University, Indore", egradYear: "2018", egradPct: "76%",
+    eothInst: "MBA (Finance)", eothYear: "2020", eothPct: "82%",
+    wCompany: "FinEdge Analytics Pvt Ltd", wDesig: "Sales Associate", wDuration: "2 Years", wSalary: "28000", wReason: "Growth",
+    wCursal: "28000", wExpsal: "35000", wNotice: "15 Days", wAvail: "Immediate",
+    skills: { sk_office: true, sk_market: true, sk_sales: true, sk_crm: true, sk_trading: false, sk_comm: true },
+    skOther: "Client Acquisition, CRM",
+    bank: "HDFC Bank Ltd", bankHolder: "Nikita Dhiman", bankAcc: "50100234567890", bankIfsc: "HDFC0001234", upi: "nikita@okhdfcbank",
+    emName: "Ekta Dhiman", emRel: "Mother", emMobile: "9826012345", emAddr: "151/1 Somnath Ki junichal, Indore",
+    rfName: "Vikram Malhotra", rfCompany: "FinEdge Analytics", rfDesig: "Sales Head", rfMobile: "9876500000",
+    docs: {
+      photo: { name: "demo_photo.jpg", data: "" },
+      aadhaar: { name: "demo_aadhaar.pdf", data: "" },
+      bank: { name: "demo_cheque.pdf", data: "" },
+      edu: { name: "demo_degree.pdf", data: "" }
+    },
+    signatureDataUrl: null,
+    videoUrl: null,
+    updatedAt: new Date().toISOString()
+  };
+
+  currentEmp = demo;
+  persistCurrentEmp();
+  populateFormFields(demo);
+  renderAllDocuments();
+  showMsg("saveMsg", "⚡ Demo details loaded! Check the 3 Offer Letters and Hindi Police Form.", "ok");
+};
+
+$("btnResetAll").onclick = function() {
+  if (!confirm("Start fresh entry for a new joiner?")) return;
+  currentEmp = createEmptyEmp();
+  setCurrentEmpId(null);
+  populateFormFields(currentEmp);
+  renderAllDocuments();
+  switchTab("join");
+  showMsg("saveMsg", "Ready for new employee details.", "");
+};
+
+window.addEventListener("DOMContentLoaded", function() {
+  setupFileUploads();
+  loadCurrentEmp();
+  renderHRTables();
+
+  // Check for Direct HR Dashboard Access (?tab=hr, ?hr=1, #hr)
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('tab') === 'hr' || urlParams.get('hr') === 'true' || urlParams.get('hr') === '1' || window.location.hash === '#hr' || urlParams.get('admin') === 'true') {
+    isHRUnlocked = true;
+    if ($("tabNavHR")) {
+      $("tabNavHR").style.display = "inline-flex";
+      $("tabNavHR").innerHTML = "👥 5. HR Dashboard &amp; Records 🔓";
+    }
+    if ($("btnAdminLogin")) {
+      $("btnAdminLogin").innerHTML = "👥 HR Dashboard (Active)";
+      $("btnAdminLogin").style.background = "#16A34A";
+    }
+    switchTab("hr");
+    return;
+  }
+
+  // Candidate Mode enforcement (when opened via QR or ?mode=candidate)
+  if (urlParams.get('mode') === 'candidate') {
+    if ($("btnAdminLogin")) $("btnAdminLogin").style.display = "none";
+    if ($("btnQuickDemo")) $("btnQuickDemo").style.display = "none";
+    if ($("btnResetAll")) $("btnResetAll").style.display = "none";
+    if ($("tabNavHR")) $("tabNavHR").style.display = "none";
+    if ($("appBanner")) {
+      $("appBanner").innerHTML = `
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span style="font-size:22px;">👋</span>
+          <div>
+            <strong style="color:#0F172A; font-size:14px;">Welcome to Kuber Alpha Research — Candidate Onboarding Portal</strong><br>
+            <span style="color:#475569; font-size:12.5px;">Please fill out your basic details below. Your joining agreement, offer letters and police verification form will be automatically prepared for your review and digital signature.</span>
+          </div>
+        </div>
+      `;
+      $("appBanner").style.background = "#EFF6FF";
+      $("appBanner").style.borderLeft = "4px solid #2563EB";
+    }
+    const footerAdmin = document.createElement("div");
+    footerAdmin.style.cssText = "text-align:center; padding:20px; font-size:12px; color:#94A3B8; margin-top:30px;";
+    footerAdmin.innerHTML = `<a href="?tab=hr" style="color:#64748B; text-decoration:underline; font-weight:600;">HR Admin Access</a>`;
+    document.querySelector("main").appendChild(footerAdmin);
+  }
+
+  // If running on local server, fetch latest records
+  if (window.location.protocol.startsWith('http')) {
+    fetch('/api/employees')
+      .then(r => r.json())
+      .then(serverData => {
+        if (serverData && typeof serverData === 'object' && Object.keys(serverData).length > 0) {
+          const db = getDB();
+          Object.assign(db.employees, serverData);
+          saveDB(db);
+          renderHRTables();
+        }
+      }).catch(() => {});
+  }
+});
+</script>
+</body>
+</html>
